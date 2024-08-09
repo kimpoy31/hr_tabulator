@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import { router } from '@inertiajs/react';
+import axios from 'axios';
+import React, { useRef, useState } from 'react'
 
 const NewActivityModal = () => {
     const [activity, setActivity] = useState<string>('')
     const [description, setDescription] = useState<string>('')
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
 
     const openModal = () => {
         const modal = document.getElementById('my_modal_3');
@@ -11,8 +14,19 @@ const NewActivityModal = () => {
         }
     };
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
+        try {
+            const response = await axios.post(route('activity.create', { activity, description } ))
+        } catch (error) {
+            
+        }
+
+        // Closemodal
+        if (closeButtonRef.current) {
+            closeButtonRef.current.click();
+        }
     }
 
   return (
@@ -24,7 +38,7 @@ const NewActivityModal = () => {
             <div className="modal-box max-w-sm">
                 <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={closeButtonRef}>✕</button>
                 </form>
                 <h3 className="font-bold text-lg">New Activity</h3>
 
@@ -54,7 +68,7 @@ const NewActivityModal = () => {
                     </label>
 
                     <div className="card-actions justify-end mt-2">
-                        <button className="btn btn-primary w-full">Create</button>
+                        <button className="btn btn-primary w-full" type='submit'>Create</button>
                     </div>
                 </form>
 
