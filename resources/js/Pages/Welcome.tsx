@@ -2,7 +2,9 @@ import React from 'react'
 
 const Welcome = () => {
   return (
-    <div>Welcome</div>
+    <div>
+        <button className='btn btn-secondary'>hello</button>
+    </div>
   )
 }
 
