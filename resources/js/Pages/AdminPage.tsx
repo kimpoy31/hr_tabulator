@@ -1,7 +1,10 @@
+import useFetchActivities from '@/Hooks/useFetchActivities'
 import NewActivityModal from '@/Modals/NewActivityModal'
-import React from 'react'
 
 const AdminPage = () => {
+
+    const { activities } = useFetchActivities();
+
   return (
     <div className='w-full h-screen flex justify-center'>
 
@@ -23,25 +26,13 @@ const AdminPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td>Quality Control Specialist</td>
-                                <td className='text-end'>Blue</td>
-                            </tr>
-                            {/* row 1 */}
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td>Quality Control Specialist</td>
-                                <td className='text-end'>Blue</td>
-                            </tr>
-                            {/* row 1 */}
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td>Quality Control Specialist</td>
-                                <td className='text-end'>Blue</td>
-                            </tr>
-                        
+                            {activities.map((activity, index) => 
+                                <tr>
+                                    <td>{activity.activity}</td>
+                                    <td>{activity.description}</td>
+                                    <td className='text-end'>Blue</td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
                 </div>

@@ -20,13 +20,20 @@ const NewActivityModal = () => {
         try {
             const response = await axios.post(route('activity.create', { activity, description } ))
         } catch (error) {
-            
+            console.log(error)
         }
 
+        // Reset values
+        resetValues();
         // Closemodal
         if (closeButtonRef.current) {
             closeButtonRef.current.click();
         }
+    }
+
+    const resetValues = () => {
+        setActivity('')
+        setDescription('')
     }
 
   return (

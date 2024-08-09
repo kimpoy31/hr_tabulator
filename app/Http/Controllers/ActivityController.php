@@ -21,5 +21,9 @@ class ActivityController
         ], 201); // 201 is the status code for "Created"
     }
 
+    function fetchAll () {
+        $activities = ActivityModel::all();
 
+        return response()->json(['activities' => $activities], 200);
+    }
 }
