@@ -6,11 +6,13 @@ const LoginPage = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const onSubmit = async() => {
+    const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
         try {
             await router.post(route('login', { username, password }))
         } catch (error) {
-            console.log(error)
+            alert(error)
         }
     }
 
@@ -18,7 +20,7 @@ const LoginPage = () => {
     <div className='w-full h-screen flex justify-center items-center bg-base-200'>
         
         <div className="card bg-base-100 w-96 shadow-xl">
-            <div className="card-body">
+            <form className="card-body" onSubmit={(e) => onSubmit(e)}>
                 {/* <h2 className="card-title"></h2> */}
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
@@ -44,9 +46,9 @@ const LoginPage = () => {
                 </label>
 
                 <div className="card-actions justify-end mt-2">
-                    <button className="btn btn-primary w-full" onClick={() => onSubmit()}>Sign in</button>
+                    <button className="btn btn-primary w-full">Sign in</button>
                 </div>
-            </div>
+            </form>
         </div>
       
     </div>

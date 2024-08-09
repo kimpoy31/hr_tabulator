@@ -12,6 +12,11 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('Welcome');
     })->name('welcome');
 
+    Route::get('/admin', function () {
+        return Inertia::render('AdminPage');
+    })->name('admin');
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
 
