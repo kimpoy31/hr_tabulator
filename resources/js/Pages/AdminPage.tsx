@@ -16,11 +16,11 @@ const AdminPage = () => {
                     <table className="table">
                         {/* head */}
                         <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th className='text-end'>Favorite Color</th>
-                        </tr>
+                            <tr>
+                                <th>Activity Name</th>
+                                <th>Description</th>
+                                <th className='text-end'>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {/* row 1 */}
