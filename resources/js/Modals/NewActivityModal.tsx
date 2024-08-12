@@ -1,8 +1,9 @@
+import { Activity } from '@/types';
 import { router } from '@inertiajs/react';
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
 
-const NewActivityModal = () => {
+const NewActivityModal = ( { eventActivities, setEventActivities } : {eventActivities:Activity[] , setEventActivities: (arg:Activity[]) => void} ) => {
     const [activity, setActivity] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -19,6 +20,11 @@ const NewActivityModal = () => {
 
         try {
             const response = await axios.post(route('activity.create', { activity, description } ))
+            if(response){
+                console.log(response.data.createdData)
+                const createdData = response.data.createdData;
+                setEventActivities([...eventActivities, createdData])
+            }
         } catch (error) {
             console.log(error)
         }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 const useFetchActivities = () => {
 
-    const [activities, setActivities] = useState<{id:number, activity:string, description:string|null}[]>([]);
+    const [activities, setActivities] = useState<{id:number, activity:string, description:string}[]>([]);
 
     const fetchActivities = async () => {
         const response = await axios.get(route('activity.fetchAll'));

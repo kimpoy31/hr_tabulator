@@ -14,11 +14,10 @@ class ActivityController
             'description' => 'string|nullable',
         ]);
 
-        ActivityModel::create($validatedData);
+        $activity = ActivityModel::create($validatedData);
 
         return response()->json([
-            'message' => 'Activity created successfully!',
-            'activity' => $activity
+            'createdData' => $activity,
         ], 201); // 201 is the status code for "Created"
     }
 

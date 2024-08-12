@@ -1,11 +1,21 @@
 import useFetchActivities from '@/Hooks/useFetchActivities'
 import NewActivityModal from '@/Modals/NewActivityModal'
+import { Activity } from '@/types';
 import { Link } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import { FaRegEye } from "react-icons/fa";
 
 const AdminPage = () => {
-
+    // Activities
+    const [ eventActivities , setEventActivities ] = useState<Activity[]>([]);
+    // Fetch existing activities
     const { activities } = useFetchActivities();
+
+    useEffect(() => {
+
+        setEventActivities( activities );
+        
+    },[activities])
 
   return (
     <div className='w-full h-screen flex justify-center'>
@@ -13,7 +23,7 @@ const AdminPage = () => {
        <div className="max-w-screen-md w-full flex flex-col py-4 gap-2">
 
             <div>
-                <NewActivityModal />
+                <NewActivityModal eventActivities={eventActivities} setEventActivities={setEventActivities} />
             </div>
 
             <div className='p-2 border'>
@@ -28,7 +38,7 @@ const AdminPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {activities.map((activity, index) => 
+                            {eventActivities.map((activity, index) => 
                                 <tr key={index}>
                                     <td>{activity.activity}</td>
                                     <td>{activity.description ?? 'no description'}</td>
