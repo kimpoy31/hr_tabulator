@@ -1,13 +1,21 @@
-import { Link } from "@inertiajs/react";
+import { PageProps } from "@/types";
+import { Link, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Activity = () => {
+    const { props } = usePage<PageProps>();
+    const activityInfo = props.activity;
+
   return (
    
     <div className="w-full md:h-screen bg-base-200 md:px-16 px-4 py-8 overflow-y-scroll">
         <Link href={route('admin')} className='btn btn-sm btn-outline'><FaArrowLeftLong />Admin Dashboard</Link>
-        <h1 className='text-3xl uppercase font-extrabold py-4'>Thats my bobords</h1>
-        
+        <div className="flex flex-col gap-0 mb-3">
+            <h1 className='text-3xl uppercase font-extrabold pt-4'>{activityInfo.activity}</h1>
+            <p>{activityInfo.description}</p>
+        </div>
+      
         {/* Judges and Criteria Here */}
         <div className='flex md:flex-row flex-col gap-6'>
         

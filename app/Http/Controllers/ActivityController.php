@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ActivityModel;
+use Inertia\Inertia;
 
 class ActivityController
 {
@@ -26,4 +27,13 @@ class ActivityController
 
         return response()->json(['activities' => $activities], 200);
     }
+
+    function show ($id) {
+        $activity = ActivityModel::find($id);
+
+        return Inertia::render('Activity', [
+            'activity' => $activity,
+        ]);
+    }
+
 }

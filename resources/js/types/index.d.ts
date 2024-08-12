@@ -13,8 +13,15 @@ export interface UserInformation {
     status: 'active'|'inactive';
 }
 
+export interface Activity {
+    id:number;
+    activity:string;
+    description:string;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
     };
+    activity: Activity
 };

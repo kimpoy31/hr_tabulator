@@ -19,11 +19,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Add the new route for activity by ID
-    Route::get('/activity/{id}', function () {
-        return Inertia::render('Activity');
-    })->name('activity.show');
-
 });
 
 Route::middleware(['guest'])->group(function () {
