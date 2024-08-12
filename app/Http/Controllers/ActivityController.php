@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UsersInformation;
 use App\Models\ActivityModel;
 use Inertia\Inertia;
 
@@ -29,9 +30,11 @@ class ActivityController
 
     function show ($id) {
         $activity = ActivityModel::find($id);
+        $judges = UsersInformation::where('activity_id', $id)->where('role','judge')->where('status','active')->get();
 
         return Inertia::render('Activity', [
             'activity' => $activity,
+            'judges' => $judges,
         ]);
     }
 

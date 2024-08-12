@@ -1,11 +1,19 @@
+import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
 import { PageProps } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Activity = () => {
     const { props } = usePage<PageProps>();
     const activityInfo = props.activity;
+    const activityJudges = props.judges;
+
+    // useEffect(() => {
+    //     console.log(activityInfo)
+    //     console.log(activityJudges)
+    // },[])
 
   return (
    
@@ -36,17 +44,12 @@ const Activity = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td className='flex justify-end'></td>
-                            </tr>
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td className='flex justify-end'></td>
-                            </tr>
-                        
-                    
+                            {activityJudges.map((judge,index) =>
+                                <tr key={index}>
+                                    <td>{judge.fullname}</td>
+                                    <td className='flex justify-end'></td>
+                                </tr>
+                             )}
                         </tbody>
                     </table>
                 </div>
@@ -57,7 +60,7 @@ const Activity = () => {
             <div className='w-full max-h-96 border p-4 shadow h-fit'>
                 <div className="flex justify-between items-center mb-2">
                     <h1 className='text-lg font-bold'>Criteria of Judging</h1>
-                    <button className="btn btn-primary btn-xs">Add new</button>
+                    <NewCriteriaModal />
                 </div>
 
                 <div className="overflow-x-auto max-h-72">
@@ -65,7 +68,8 @@ const Activity = () => {
                         {/* head */}
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Criteria</th>
+                                <th>Percentage</th>
                                 <th className='flex justify-end'>Action</th>
                             </tr>
                         </thead>
@@ -73,14 +77,9 @@ const Activity = () => {
                             {/* row 1 */}
                             <tr>
                                 <td>Cy Ganderton</td>
+                                <td></td>
                                 <td className='flex justify-end'></td>
-                            </tr>
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td className='flex justify-end'></td>
-                            </tr>
-                        
-                    
+                            </tr>                   
                         </tbody>
                     </table>
                 </div>
