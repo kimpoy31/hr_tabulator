@@ -6,7 +6,7 @@ import React, { useRef, useState } from 'react'
 const NewActivityModal = ( { eventActivities, setEventActivities } : {eventActivities:Activity[] , setEventActivities: (arg:Activity[]) => void} ) => {
     const [activity, setActivity] = useState<string>('')
     const [description, setDescription] = useState<string>('')
-    const closeButtonRef = useRef<HTMLButtonElement>(null);
+    const closeActivityModal = useRef<HTMLButtonElement>(null);
 
     const openModal = () => {
         const modal = document.getElementById('my_modal_3');
@@ -21,7 +21,6 @@ const NewActivityModal = ( { eventActivities, setEventActivities } : {eventActiv
         try {
             const response = await axios.post(route('activity.create', { activity, description } ))
             if(response){
-                console.log(response.data.createdData)
                 const createdData = response.data.createdData;
                 setEventActivities([...eventActivities, createdData])
             }
@@ -32,8 +31,8 @@ const NewActivityModal = ( { eventActivities, setEventActivities } : {eventActiv
         // Reset values
         resetValues();
         // Closemodal
-        if (closeButtonRef.current) {
-            closeButtonRef.current.click();
+        if (closeActivityModal.current) {
+            closeActivityModal.current.click();
         }
     }
 
@@ -51,7 +50,7 @@ const NewActivityModal = ( { eventActivities, setEventActivities } : {eventActiv
             <div className="modal-box max-w-sm">
                 <form method="dialog">
                     {/* if there is a button in form, it will close the modal */}
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={closeButtonRef}>✕</button>
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={closeActivityModal}>✕</button>
                 </form>
                 <h3 className="font-bold text-lg">New Activity</h3>
 

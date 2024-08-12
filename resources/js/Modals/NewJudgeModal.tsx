@@ -37,7 +37,9 @@ const NewJudgeModal = () => {
             console.log(error)
         }
 
-       
+       if(closeButtonRef.current){
+        closeButtonRef.current.click();
+       }
     }
 
   return (
