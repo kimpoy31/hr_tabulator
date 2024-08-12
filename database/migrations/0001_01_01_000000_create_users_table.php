@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('activity_id')->nullable()->default(null);
-            $table->json('role');
-            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('username')->unique();
             $table->string('password');
             $table->timestamps();
