@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('activity_id');
+            $table->string('fullname');
             $table->json('role');
             $table->enum('status', ['active', 'inactive'])->default('active');
-
             $table->timestamps();
         });
     }

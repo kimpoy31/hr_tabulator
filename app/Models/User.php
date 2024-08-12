@@ -21,6 +21,16 @@ class User extends Authenticatable
         'password',
     ];
 
+    
+    // Append Users basic information
+    protected $appends = [
+        'userInformation' 
+    ];
+
+    public function getUserInformationAttribute () {
+        return $userInfo = UsersInformation::find($this->id);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
