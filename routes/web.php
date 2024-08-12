@@ -10,6 +10,8 @@ use App\Http\Controllers\AuthController;
 require __DIR__.'/admin.php';
 // Include activity routes
 require __DIR__.'/activity.php';
+// Include judge routes
+require __DIR__.'/judge.php';
 
 Route::middleware(['auth'])->group(function () {
 

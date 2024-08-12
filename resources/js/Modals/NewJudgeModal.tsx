@@ -1,6 +1,10 @@
+import { PageProps } from '@/types';
+import { usePage } from '@inertiajs/react';
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const NewJudgeModal = () => {
+    const { props } = usePage<PageProps>();
 
     const [fullname, setFullname] = useState('');
     const [username, setUsername] = useState('');
@@ -16,7 +20,12 @@ const NewJudgeModal = () => {
     const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        
+        try {
+            const response = await axios.post(route('judge.create' , { fullname, username, password, activity_id : props.activity.id } ));
+            console.log(response.data.judge);
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (
