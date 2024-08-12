@@ -1,5 +1,7 @@
 import useFetchActivities from '@/Hooks/useFetchActivities'
 import NewActivityModal from '@/Modals/NewActivityModal'
+import { Link } from '@inertiajs/react';
+import { FaRegEye } from "react-icons/fa";
 
 const AdminPage = () => {
 
@@ -27,10 +29,12 @@ const AdminPage = () => {
                         </thead>
                         <tbody>
                             {activities.map((activity, index) => 
-                                <tr>
+                                <tr key={index}>
                                     <td>{activity.activity}</td>
-                                    <td>{activity.description}</td>
-                                    <td className='text-end'>Blue</td>
+                                    <td>{activity.description ?? 'no description'}</td>
+                                    <td className='flex justify-end'>
+                                        <Link href={route('activity.show', { id: activity.id })} className='btn btn-square btn-sm'><FaRegEye /></Link>
+                                    </td>
                                 </tr>
                             )}
                         </tbody>
