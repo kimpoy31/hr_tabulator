@@ -9,7 +9,7 @@ export interface UserInformation {
     user_id: number;
     activity_id: number;
     fullname: string;
-    role: string;
+    role: 'judge'|'admin';
     status: 'active'|'inactive';
 }
 

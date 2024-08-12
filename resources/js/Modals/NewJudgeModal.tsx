@@ -1,7 +1,7 @@
 import { PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 const NewJudgeModal = () => {
     const { props } = usePage<PageProps>();
@@ -9,6 +9,7 @@ const NewJudgeModal = () => {
     const [fullname, setFullname] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
 
     const openModal = () => {
         const modal = document.getElementById('newJudgeModal');
@@ -17,15 +18,26 @@ const NewJudgeModal = () => {
         }
     };
 
+    const clearValues = () => {
+        setFullname('');
+        setUsername('');
+        setPassword('');
+    }
+
     const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         try {
-            const response = await axios.post(route('judge.create' , { fullname, username, password, activity_id : props.activity.id } ));
-            console.log(response.data.judge);
+            const response = await axios.post(route('judge.create' , { fullname, username, password, activity_id : props.activity.id } ));  
+            if(response){
+                clearValues();
+            }
+
         } catch (error) {
             console.log(error)
         }
+
+       
     }
 
   return (
@@ -34,7 +46,7 @@ const NewJudgeModal = () => {
         <dialog id="newJudgeModal" className="modal">
         <div className="modal-box max-w-sm">
             <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={closeButtonRef} >✕</button>
             </form>
             <h3 className="text-lg font-bold">Insert judge</h3>
             <form onSubmit={(e) => onSubmit(e)}>
