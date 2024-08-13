@@ -1,23 +1,23 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+// import axios from 'axios'
+// import React, { useEffect, useState } from 'react'
 
-const useFetchActivities = () => {
+// const useFetchActivities = () => {
 
-    const [activities, setActivities] = useState<{id:number, activity:string, description:string}[]>([]);
+//     const [activities, setActivities] = useState<{id:number, activity:string, description:string}[]>([]);
 
-    const fetchActivities = async () => {
-        const response = await axios.get(route('activity.fetchAll'));
+//     const fetchActivities = async () => {
+//         const response = await axios.get(route('activity.fetchAll'));
 
-        if(response){
-            setActivities(response.data.activities);
-        }
-    }
+//         if(response){
+//             setActivities(response.data.activities);
+//         }
+//     }
 
-    useEffect(() => {
-        fetchActivities();
-    },[])
+//     useEffect(() => {
+//         fetchActivities();
+//     },[])
 
-  return { activities }
-}
+//   return { activities }
+// }
 
-export default useFetchActivities
+// export default useFetchActivities

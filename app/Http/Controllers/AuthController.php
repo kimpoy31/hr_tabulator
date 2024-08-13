@@ -31,7 +31,7 @@ class AuthController
             // $isAdmin = in_array('admin', json_decode($roles, true));
 
             // Redirect to the dashboard using Inertia with a success message
-            return to_route("admin");
+            return to_route("admin.show");
         }
 
         // Authentication failed

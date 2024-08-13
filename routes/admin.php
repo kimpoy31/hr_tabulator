@@ -4,12 +4,10 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\AdminController;
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/admin', function () {
-        return Inertia::render('AdminPage');
-    })->name('admin');
+    Route::get('/admin', [AdminController::class, 'show'])->name('admin.show');
 
 });

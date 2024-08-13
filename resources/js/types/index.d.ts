@@ -43,4 +43,5 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     judges: UserInformation[];
     criterias:Criteria[];
     contestants:Contestant[];
+    activities:Activity[];
 };
