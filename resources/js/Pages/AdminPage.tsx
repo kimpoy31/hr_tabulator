@@ -3,6 +3,7 @@ import { Activity, PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { FaRegEye } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 
 const AdminPage = () => {
     // Activities
@@ -21,8 +22,9 @@ const AdminPage = () => {
 
        <div className="max-w-screen-md w-full flex flex-col py-4 gap-2">
 
-            <div>
+            <div className='flex justify-between'>
                 <NewActivityModal activities={activities} setActivities={setActivities} />
+                <Link href={route('logout')} className='btn btn-sm btn-outline btn-error'><MdLogout size={18} /> Logout</Link>
             </div>
 
             <div className='p-2 border'>

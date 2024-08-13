@@ -27,7 +27,7 @@ const Activity = () => {
   return (
    
     <div className="w-full md:h-screen bg-base-200 md:px-16 px-4 py-8 overflow-y-scroll">
-        <Link href={route('admin')} className='btn btn-sm btn-outline'><FaArrowLeftLong />Admin Dashboard</Link>
+        <Link href={route('admin.show')} className='btn btn-sm btn-outline'><FaArrowLeftLong />Admin Dashboard</Link>
         <div className="flex flex-col gap-0 mb-3">
             <h1 className='text-3xl uppercase font-extrabold pt-4'>{activityInfo.activity}</h1>
             <p>{activityInfo.description}</p>
