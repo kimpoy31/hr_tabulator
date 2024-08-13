@@ -1,7 +1,7 @@
 import NewContestantModal from "@/Modals/NewContestantModal";
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
-import { Criteria, PageProps, UserInformation } from "@/types";
+import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -12,6 +12,7 @@ const Activity = () => {
 
     const [judges, setJudges] = useState<UserInformation[]>([])
     const [criterias, setCriterias] = useState<Criteria[]>([])
+    const [contestants, setContestants] = useState<Contestant[]>([])
 
     const TotalPercentage = criterias.reduce((total, item) => {
         return total + Number(item.percentage);
@@ -19,7 +20,8 @@ const Activity = () => {
 
     useEffect(() => {
         setJudges(props.judges)
-        setCriterias(props.criteria)
+        setCriterias(props.criterias)
+        setContestants(props.contestants)
     },[])
 
   return (
@@ -31,11 +33,11 @@ const Activity = () => {
             <p>{activityInfo.description}</p>
         </div>
       
-        {/* Judges and Criteria Here */}
+        {/* Judges and Contestants Here */}
         <div className='flex md:flex-row flex-col gap-6'>
         
             {/* Judges Container here */}
-            <div className='w-full max-h-96 md:max-w-96 border p-4 shadow h-fit'>
+            <div className='w-full max-h-96 border p-4 shadow h-fit'>
                 <div className="flex justify-between items-center mb-2">
                     <h1 className='text-lg font-bold'>Judges</h1>
                     <NewJudgeModal judges={judges} setJudges={setJudges} />
@@ -61,33 +63,29 @@ const Activity = () => {
                     </table>
                 </div>
             </div>
-            {/* Judges Container here */}
 
-            {/* Criteria Container */}
+            {/* Contestants Container here */}
             <div className='w-full max-h-96 border p-4 shadow h-fit'>
                 <div className="flex justify-between items-center mb-2">
-                    <h1 className='text-lg font-bold'>Criteria of Judging</h1>
-                    <NewCriteriaModal criterias={criterias} setCriterias={setCriterias} TotalPercentage={TotalPercentage} />
+                    <h1 className='text-lg font-bold'>Contestants</h1>
+                    <NewContestantModal contestants={contestants} setContestants={setContestants} />
                 </div>
 
                 <div className="overflow-x-auto max-h-72">
                     <table className="table">
-                        {/* head */}
                         <thead>
                             <tr>
-                                <th>Criteria</th>
-                                <th>Percentage</th>
+                                <th>Name</th>
                                 <th className='flex justify-end'>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {criterias.map((criteria, index) => 
+                            {contestants.map((contestant,index) => 
                             <tr key={index}>
-                                <td>{criteria.criteria}</td>
-                                <td>{criteria.percentage}</td>
+                                <td>{contestant.contestant}</td>
                                 <td className='flex justify-end'></td>
-                            </tr>    
-                            )}               
+                            </tr>
+                            )}                   
                         </tbody>
                     </table>
                 </div>
@@ -95,11 +93,16 @@ const Activity = () => {
             </div>
 
         </div>
-        {/* Judges and Criteria Here */}
+   
+
+        
+        
+
+        {/* Criteria Container */}
         <div className='w-full max-h-96 border p-4 shadow h-fit mt-6'>
             <div className="flex justify-between items-center mb-2">
-                <h1 className='text-lg font-bold'>Contestants</h1>
-                <NewContestantModal />
+                <h1 className='text-lg font-bold'>Criteria of Judging</h1>
+                <NewCriteriaModal criterias={criterias} setCriterias={setCriterias} TotalPercentage={TotalPercentage} />
             </div>
 
             <div className="overflow-x-auto max-h-72">
@@ -107,54 +110,19 @@ const Activity = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Criteria</th>
+                            <th>Percentage</th>
                             <th className='flex justify-end'>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
-                        <tr>
-                            <td>Cy Ganderton</td>
+                        {criterias.map((criteria, index) => 
+                        <tr key={index}>
+                            <td>{criteria.criteria}</td>
+                            <td>{criteria.percentage}</td>
                             <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                        <tr>
-                            <td>Cy Ganderton</td>
-                            <td className='flex justify-end'></td>
-                        </tr>
-                    
-                
+                        </tr>    
+                        )}               
                     </tbody>
                 </table>
             </div>

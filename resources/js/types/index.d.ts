@@ -28,11 +28,19 @@ export interface Criteria {
     status: 'active'|'inactive';
 }
 
+export interface Contestant {
+    id:number;
+    activity_id: number;
+    contestant:string;
+    status: 'active'|'inactive';
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
     };
     activity: Activity
     judges: UserInformation[];
-    criteria:Criteria[];
+    criterias:Criteria[];
+    contestants:Contestant[];
 };

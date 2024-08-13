@@ -1,8 +1,9 @@
-import { PageProps } from "@/types";
+import { Contestant, PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
+import axios from "axios";
 import { useRef, useState } from "react";
 
-const NewContestantModal = () => {
+const NewContestantModal = ({contestants, setContestants} : { contestants:Contestant[], setContestants:(arg:Contestant[]) => void }) => {
     const { props } = usePage<PageProps>();
 
     const [contestant, setContestant] = useState<string>('')
@@ -19,8 +20,18 @@ const NewContestantModal = () => {
         setContestant('');
     }
 
-    const onSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        try {
+            const response = await axios.post(route('contestant.create', { activity_id:props.activity.id ,contestant }))
+            if(response){
+                setContestants([...contestants, response.data.contestant])
+                clearValues();
+            }
+        } catch (error) {
+            console.log(error);
+        }
 
         if(closeButtonRef.current){
             closeButtonRef.current.click();
