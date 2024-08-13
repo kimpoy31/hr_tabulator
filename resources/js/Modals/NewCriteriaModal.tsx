@@ -65,6 +65,7 @@ const NewCriteriaModal = ({criterias, setCriterias, TotalPercentage} : {criteria
                             onChange={(e) => setCriteria(e.target.value)}
                             className="input input-bordered w-full" 
                             required
+                            disabled={TotalPercentage === 100}
                         />
                     </label>
                     {/* <div className="flex items-end gap-4"> */}
@@ -78,9 +79,10 @@ const NewCriteriaModal = ({criterias, setCriterias, TotalPercentage} : {criteria
                                     onChange={(e) => handlePercentageInput(Number(e.target.value))}
                                     className="input input-bordered w-full" 
                                     required
+                                    disabled={TotalPercentage === 100}
                                 />
                         </label>
-                        <div className="text-xs">{TotalPercentage === 100 ?  `Total Criteria is now 100%`  : `must not be greater than ${100 - TotalPercentage}` }</div>
+                        <div className="text-xs">{TotalPercentage === 100 ?  `Criteria total is now 100%`  : `must not be greater than ${100 - TotalPercentage}` }</div>
                     {/* </div> */}
                     <button className="btn btn-sm btn-primary w-full mt-4" type="submit" disabled={TotalPercentage === 100}>Create</button>
                 </form>

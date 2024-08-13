@@ -1,3 +1,4 @@
+import NewContestantModal from "@/Modals/NewContestantModal";
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
 import { Criteria, PageProps, UserInformation } from "@/types";
@@ -97,8 +98,8 @@ const Activity = () => {
         {/* Judges and Criteria Here */}
         <div className='w-full max-h-96 border p-4 shadow h-fit mt-6'>
             <div className="flex justify-between items-center mb-2">
-                <h1 className='text-lg font-bold'>Contestant and Scores</h1>
-                <button className="btn btn-primary btn-xs">Add new</button>
+                <h1 className='text-lg font-bold'>Contestants</h1>
+                <NewContestantModal />
             </div>
 
             <div className="overflow-x-auto max-h-72">
