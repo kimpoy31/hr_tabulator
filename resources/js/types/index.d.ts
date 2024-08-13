@@ -34,4 +34,5 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     };
     activity: Activity
     judges: UserInformation[];
+    criteria:Criteria[];
 };

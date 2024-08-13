@@ -1,6 +1,6 @@
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
-import { PageProps, UserInformation } from "@/types";
+import { Criteria, PageProps, UserInformation } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -10,9 +10,11 @@ const Activity = () => {
     const activityInfo = props.activity;
 
     const [judges, setJudges] = useState<UserInformation[]>([])
+    const [criterias, setCriterias] = useState<Criteria[]>([])
 
     useEffect(() => {
         setJudges(props.judges)
+        setCriterias(props.criteria)
     },[])
 
   return (
@@ -49,7 +51,7 @@ const Activity = () => {
                                     <td>{judge.fullname}</td>
                                     <td className='flex justify-end'></td>
                                 </tr>
-                             )}
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -74,12 +76,13 @@ const Activity = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            <tr>
-                                <td>Cy Ganderton</td>
-                                <td></td>
+                            {criterias.map((criteria, index) => 
+                            <tr key={index}>
+                                <td>{criteria.criteria}</td>
+                                <td>{criteria.percentage}</td>
                                 <td className='flex justify-end'></td>
-                            </tr>                   
+                            </tr>    
+                            )}               
                         </tbody>
                     </table>
                 </div>

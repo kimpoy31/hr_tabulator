@@ -22,7 +22,6 @@ const NewCriteriaModal = () => {
 
     const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("triggered")
 
         try {
             const response = await axios.post(route('criteria.create', { activity_id: props.activity.id, criteria, percentage }))
