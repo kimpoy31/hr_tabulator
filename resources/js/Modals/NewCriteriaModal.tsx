@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import { useRef, useState } from "react";
 
-const NewCriteriaModal = ({criterias, setCriterias} : {criterias:Criteria[], setCriterias:(arg:Criteria[])=>void}) => {
+const NewCriteriaModal = ({criterias, setCriterias, TotalPercentage} : {criterias:Criteria[], setCriterias:(arg:Criteria[])=>void, TotalPercentage:number}) => {
     const { props } = usePage<PageProps>();
 
     const [criteria, setCriteria] = useState<string>('');
@@ -18,7 +18,7 @@ const NewCriteriaModal = ({criterias, setCriterias} : {criterias:Criteria[], set
     };
 
     const handlePercentageInput = (arg:number) => {
-        setPercentage( arg > 100 ? 100 : arg );
+        setPercentage( arg > 100 - TotalPercentage ? 100 - TotalPercentage : arg );
     }
 
     const clearValues = () => {
@@ -67,19 +67,22 @@ const NewCriteriaModal = ({criterias, setCriterias} : {criterias:Criteria[], set
                             required
                         />
                     </label>
-                    <label className="form-control w-full max-w-24">
-                        <div className="label">
-                            <span className="label-text">Percentage</span>
-                        </div>
-                        <input 
-                            type="text" 
-                            value={percentage}
-                            onChange={(e) => handlePercentageInput(Number(e.target.value))}
-                            className="input input-bordered w-full" 
-                            required
-                        />
-                    </label>
-                    <button className="btn btn-sm btn-primary w-full mt-4" type="submit">Create</button>
+                    {/* <div className="flex items-end gap-4"> */}
+                        <label className="form-control w-full max-w-24">
+                            <div className="label">
+                                <span className="label-text">Percentage</span>
+                            </div>
+                                <input 
+                                    type="text" 
+                                    value={percentage}
+                                    onChange={(e) => handlePercentageInput(Number(e.target.value))}
+                                    className="input input-bordered w-full" 
+                                    required
+                                />
+                        </label>
+                        <div className="text-xs">{TotalPercentage === 100 ?  `Total Criteria is now 100%`  : `must not be greater than ${100 - TotalPercentage}` }</div>
+                    {/* </div> */}
+                    <button className="btn btn-sm btn-primary w-full mt-4" type="submit" disabled={TotalPercentage === 100}>Create</button>
                 </form>
             </div>
         </dialog>
