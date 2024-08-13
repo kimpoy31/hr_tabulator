@@ -32,6 +32,6 @@ class JudgeController
 
         }
 
-        return response()->json(['judge' => $createdUser], 200);
+        return response()->json(['judge' => $createdUser], 201);
     }
 }

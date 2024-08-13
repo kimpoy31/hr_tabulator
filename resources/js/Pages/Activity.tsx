@@ -8,7 +8,6 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 const Activity = () => {
     const { props } = usePage<PageProps>();
     const activityInfo = props.activity;
-    const activityJudges = props.judges;
 
     const [judges, setJudges] = useState<UserInformation[]>([])
 

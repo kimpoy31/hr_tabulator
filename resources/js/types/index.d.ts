@@ -17,6 +17,15 @@ export interface Activity {
     id:number;
     activity:string;
     description:string;
+    status: 'active'|'inactive';
+}
+
+export interface Criteria {
+    id:number;
+    activity_id: number;
+    criteria:string;
+    percentage:number;
+    status: 'active'|'inactive';
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {

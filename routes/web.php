@@ -12,6 +12,8 @@ require __DIR__.'/admin.php';
 require __DIR__.'/activity.php';
 // Include judge routes
 require __DIR__.'/judge.php';
+// Include criteria routes
+require __DIR__.'/criteria.php';
 
 Route::middleware(['auth'])->group(function () {
 
