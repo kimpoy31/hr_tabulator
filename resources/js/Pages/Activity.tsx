@@ -1,8 +1,8 @@
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
-import { PageProps } from "@/types";
+import { PageProps, UserInformation } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Activity = () => {
@@ -10,10 +10,11 @@ const Activity = () => {
     const activityInfo = props.activity;
     const activityJudges = props.judges;
 
-    // useEffect(() => {
-    //     console.log(activityInfo)
-    //     console.log(activityJudges)
-    // },[])
+    const [judges, setJudges] = useState<UserInformation[]>([])
+
+    useEffect(() => {
+        setJudges(props.judges)
+    },[])
 
   return (
    
@@ -31,7 +32,7 @@ const Activity = () => {
             <div className='w-full max-h-96 md:max-w-96 border p-4 shadow h-fit'>
                 <div className="flex justify-between items-center mb-2">
                     <h1 className='text-lg font-bold'>Judges</h1>
-                    <NewJudgeModal />
+                    <NewJudgeModal judges={judges} setJudges={setJudges} />
                 </div>
 
                 <div className="overflow-x-auto max-h-72">
@@ -44,7 +45,7 @@ const Activity = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {activityJudges.map((judge,index) =>
+                            {judges.map((judge,index) =>
                                 <tr key={index}>
                                     <td>{judge.fullname}</td>
                                     <td className='flex justify-end'></td>

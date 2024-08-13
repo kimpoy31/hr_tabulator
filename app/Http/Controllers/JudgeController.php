@@ -23,7 +23,7 @@ class JudgeController
 
         if($createdUser) {
             
-            UsersInformation::create([
+            $createdUserInfo = UsersInformation::create([
                 'user_id' => $createdUser->id,
                 'activity_id' => $validatedData['activity_id'],
                 'fullname' => $validatedData['fullname'],

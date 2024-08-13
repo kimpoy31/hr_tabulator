@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('activity_id');
             $table->string('criteria');
             $table->integer('percentage');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

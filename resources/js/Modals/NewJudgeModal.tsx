@@ -1,9 +1,9 @@
-import { PageProps } from '@/types';
+import { PageProps, UserInformation } from '@/types';
 import { usePage } from '@inertiajs/react';
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
 
-const NewJudgeModal = () => {
+const NewJudgeModal = ({ judges,setJudges } : { judges:UserInformation[], setJudges: (args: UserInformation[]) => void }) => {
     const { props } = usePage<PageProps>();
 
     const [fullname, setFullname] = useState('');
@@ -30,6 +30,8 @@ const NewJudgeModal = () => {
         try {
             const response = await axios.post(route('judge.create' , { fullname, username, password, activity_id : props.activity.id } ));  
             if(response){
+                const responseData = response.data.judge.userInformation
+                setJudges([...judges, responseData])
                 clearValues();
             }
 
