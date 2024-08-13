@@ -24,14 +24,11 @@ class AuthController
 
 
             // Get the authenticated user
-            // $user = Auth::user();
-            // $roles = $user->role;
-
-            // Check if the user's roles include 'admin'
-            // $isAdmin = in_array('admin', json_decode($roles, true));
+            $user = Auth::user();
+            $role = $user->userInformation->role;
 
             // Redirect to the dashboard using Inertia with a success message
-            return to_route("admin.show");
+            return to_route($role === "admin" ? "admin.show" : "welcome");
         }
 
         // Authentication failed
