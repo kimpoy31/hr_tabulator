@@ -62,7 +62,7 @@ const Activity = () => {
             <div className='w-full max-h-96 border p-4 shadow h-fit'>
                 <div className="flex justify-between items-center mb-2">
                     <h1 className='text-lg font-bold'>Criteria of Judging</h1>
-                    <NewCriteriaModal />
+                    <NewCriteriaModal criterias={criterias} setCriterias={setCriterias} />
                 </div>
 
                 <div className="overflow-x-auto max-h-72">

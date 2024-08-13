@@ -1,13 +1,14 @@
-import { PageProps } from "@/types";
+import { Criteria, PageProps } from "@/types";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const NewCriteriaModal = () => {
+const NewCriteriaModal = ({criterias, setCriterias} : {criterias:Criteria[], setCriterias:(arg:Criteria[])=>void}) => {
     const { props } = usePage<PageProps>();
 
     const [criteria, setCriteria] = useState<string>('');
     const [percentage, setPercentage] = useState<number>(0);
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
     
     const openModal = () => {
         const modal = document.getElementById('newCriteriaModal');
@@ -20,14 +21,24 @@ const NewCriteriaModal = () => {
         setPercentage( arg > 100 ? 100 : arg );
     }
 
+    const clearValues = () => {
+        setCriteria('');
+        setPercentage(0);
+    }
+
     const onSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         try {
             const response = await axios.post(route('criteria.create', { activity_id: props.activity.id, criteria, percentage }))
-            console.log(response.data.criteria)
+            setCriterias([...criterias, response.data.criteria])
+            clearValues();
         } catch (error) {
             console.log(error)
+        }
+
+        if(closeButtonRef.current){
+            closeButtonRef.current.click()
         }
     }
 
@@ -39,7 +50,7 @@ const NewCriteriaModal = () => {
             <div className="modal-box max-w-sm">
                 <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" ref={closeButtonRef}>✕</button>
                 </form>
                 <h3 className="font-bold text-lg">Add Criteria</h3>
                 <form className="py-4" onSubmit={(e) => onSubmit(e)} >
