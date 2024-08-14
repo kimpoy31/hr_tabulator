@@ -7,6 +7,7 @@ interface ScoreRecordProp {
   judge_id:number,  
   criteria_id:number,
   activity_id:number,
+  contestant_id:number,
   score:number
 }
 
@@ -27,12 +28,13 @@ const Welcome = () => {
   useEffect(() => {
     if (contestants.length > 0 && criterias.length > 0) {
       setScoreRecord(
-        contestants.map(() => 
+        contestants.map((contestant) => 
           criterias.map(criteria => ({
             judge_id: props.auth.user.id,
             criteria_id: criteria.id,
             activity_id: props.activity.id,
-            score: 0
+            contestant_id: contestant.id ,
+            score: 0,
           }))
         )
       )
@@ -53,6 +55,12 @@ const Welcome = () => {
       return updatedScoreRecord;
     });
   };
+
+  const handleSave = () => {
+    console.log(scoreRecord);
+
+
+  }
 
   return (
     <div className='lg:px-32 px-4 py-4'>
@@ -111,8 +119,8 @@ const Welcome = () => {
         </table>
       </div>
         
-      <div className="w-full flex justify-end mt-4 gap-2">
-        <button className="btn btn-outline btn-primary text-white uppercase" onClick={() => console.log(scoreRecord)}>Save</button>
+      <div className="w-full flex justify-end mt-4 gap-1">
+        <button className="btn btn-outline btn-primary text-white uppercase" onClick={() => handleSave()}>Save</button>
         <button className="btn btn-primary text-white uppercase">submit scoresheet</button>
       </div>
     </div>
