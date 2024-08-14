@@ -37,17 +37,15 @@ class ActivityController
         $role = $user->userInformation->role;
 
         if($role !== 'admin'){
-            return to_route('welcome');
+            return to_route('judge.show');
         }
 
         $activity = ActivityModel::find($id);
-        $judges = UsersInformation::where('activity_id', $id)->where('role','judge')->where('status','active')->get();
         $criterias = Criteria::where('activity_id', $id)->where('status','active')->get();
         $contestants = Contestant::where('activity_id', $id)->where('status','active')->get();
 
         return Inertia::render('Activity', [
             'activity' => $activity,
-            'judges' => $judges,
             'criterias' => $criterias,
             'contestants' => $contestants
         ]);

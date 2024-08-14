@@ -22,13 +22,12 @@ class AuthController
             // Authentication was successful
             $request->session()->regenerate();
 
-
             // Get the authenticated user
             $user = Auth::user();
             $role = $user->userInformation->role;
 
             // Redirect to the dashboard using Inertia with a success message
-            return to_route($role === "admin" ? "admin.show" : "welcome");
+            return to_route($role === "admin" ? "admin.show" : "judge.show");
         }
 
         // Authentication failed

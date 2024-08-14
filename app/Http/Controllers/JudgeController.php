@@ -2,9 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
 use App\Models\UsersInformation;
+use App\Models\ActivityModel;
+use App\Models\Criteria;
+use App\Models\Contestant;
+use App\Models\Judge;
+
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class JudgeController
 {
@@ -33,5 +41,29 @@ class JudgeController
         }
 
         return response()->json(['judge' => $createdUser], 201);
+    }
+
+
+    function show () {
+        $user = Auth::user();
+        $role = $user->userInformation->role;
+
+        if($role !== 'judge'){
+            return to_route('admin.show');
+        }
+
+        $activity_id = $user->userInformation->activity_id;
+
+        $activity = ActivityModel::find($activity_id);
+        $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
+        $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
+        $judge = UsersInformation::where('activity_id', $activity_id)->where('status','active')->get();
+        
+        return Inertia::render('Welcome', [
+            'activity' => $activity,
+            'criterias' => $criterias,
+            'contestants' => $contestants,
+            'judge' => $judge,
+        ]);
     }
 }

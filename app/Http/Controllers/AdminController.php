@@ -15,7 +15,7 @@ class AdminController
         $role = $user->userInformation->role;
 
         if($role !== 'admin'){
-            return to_route('welcome');
+            return to_route('judge.show');
         }
 
         return Inertia::render('AdminPage', [

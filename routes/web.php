@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\JudgeController;
 
 // Include admin routes
 require __DIR__.'/admin.php';
@@ -19,10 +20,7 @@ require __DIR__.'/contestant.php';
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', function () {
-        return Inertia::render('Welcome');
-    })->name('welcome');
-
+    Route::get('/', [JudgeController::class, 'show'])->name('judge.show');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });
