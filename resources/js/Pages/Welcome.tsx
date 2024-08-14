@@ -1,5 +1,6 @@
 import { Activity, Contestant, Criteria, PageProps, User } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { MdLogout } from 'react-icons/md'
 
@@ -56,10 +57,17 @@ const Welcome = () => {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async() => {
     console.log(scoreRecord);
 
-
+    try {
+      const response = await axios.post(route('score.create', { scoreRecord }))
+      if(response){
+        console.log(response)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
