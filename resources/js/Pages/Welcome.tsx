@@ -40,6 +40,9 @@ const Welcome = () => {
         )
       )
     }
+
+    
+
   }, [contestants, criterias, props.auth.user.id, props.activity.id])
 
   const handleScoreChange = (

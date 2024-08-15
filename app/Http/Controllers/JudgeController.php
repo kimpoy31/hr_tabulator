@@ -10,6 +10,7 @@ use App\Models\ActivityModel;
 use App\Models\Criteria;
 use App\Models\Contestant;
 use App\Models\Judge;
+use App\Models\Score;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,6 +38,32 @@ class JudgeController
                 'fullname' => $validatedData['fullname'],
                 'role' => 'judge',
             ]);
+
+            $contestants = Contestant::where('activity_id', $createdUserInfo->activity_id)
+                            ->where('status', 'active')
+                            ->get();
+
+            $criterias = Criteria::where('activity_id', $createdUserInfo->activity_id)
+                            ->where('status', 'active')
+                            ->get();
+
+            if($contestants->count() > 0 && $criterias->count() > 0 ){
+
+                foreach($contestants as $contestant){
+                    foreach ($criterias as $criteria) {
+                        Score::create(
+                            [
+                                'activity_id' => $createdUserInfo->activity_id,
+                                'judge_id' => $createdUserInfo->user_id,
+                                'criteria_id' => $criteria->id,
+                                'contestant_id' => $contestant->id,
+                                'score' => 0,
+                            ]
+                        );
+                    }
+                }
+
+            }
 
         }
 
