@@ -35,6 +35,19 @@ export interface Contestant {
     status: 'active'|'inactive';
 }
 
+export interface Score {
+    id:number;
+    activity_id: number;
+    judge_id: number;
+    criteria_id: number;
+    contestant_id: number;
+    status: 'active'|'inactive';
+    score:number;
+    criteriaInformation: Criteria;
+    judgeInformation:UserInformation;
+    contestantInformation:Contestant;
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
@@ -44,4 +57,5 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     criterias:Criteria[];
     contestants:Contestant[];
     activities:Activity[];
+    scoresheet:Score[];
 };

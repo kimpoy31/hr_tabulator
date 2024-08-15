@@ -15,5 +15,26 @@ class Score extends Model
         'score',
     ];
 
+    // Append Judge information
+    protected $appends = [
+        'judgeInformation',
+        'criteriaInformation', 
+        'contestantInformation', 
+    ];
+
+    public function getJudgeInformationAttribute () {
+        return $judgeInfo = UsersInformation::find($this->judge_id);
+    }
+
+    // Append Criteria information
+    public function getCriteriaInformationAttribute () {
+        return $criteriaInfo = Criteria::find($this->criteria_id);
+    }
+
+    // Append Criteria information
+    public function getContestantInformationAttribute () {
+        return $contestantInfo = Contestant::find($this->contestant_id);
+    }
+
     use HasFactory;
 }

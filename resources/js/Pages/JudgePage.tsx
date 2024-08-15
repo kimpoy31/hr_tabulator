@@ -1,4 +1,4 @@
-import { Activity, Contestant, Criteria, PageProps } from '@/types'
+import { Activity, Contestant, Criteria, PageProps, Score } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
 import { MdLogout } from 'react-icons/md'
@@ -9,13 +9,18 @@ const JudgePage = () => {
     const [activity, setActivity] = useState<Activity | undefined>()
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [contestants, setContestants] = useState<Contestant[]>([])
+    const [scoresheet, setScoresheet] = useState<Score[]>([])
 
     useEffect(() => {
         setActivity(props.activity)
         setCriterias(props.criterias)
         setContestants(props.contestants)
+        setScoresheet(props.scoresheet)
+    }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
-    }, [props.activity, props.criterias, props.contestants])
+    useEffect(() => {
+        console.log(props)
+    },[scoresheet])
 
   return (
     <div className='lg:px-32 px-4 py-4'>
@@ -33,10 +38,14 @@ const JudgePage = () => {
 
         {contestants.length === 0 || criterias.length === 0
         ?   <div className='w-full text-center p-8 bg-slate-100 mt-4 shadow-md uppercase font-bold'>
-                Please contact administrator {contestants.length + ' ' + criterias.length} 
+                Please contact administrator
             </div>
-        :    <div>
-                TABLE HERE
+        :   <div>
+                {scoresheet.map((score,index) => 
+                    <div key={index}>
+                        {score.criteriaInformation.criteria}
+                    </div> 
+                )}
             </div>
         }
         
