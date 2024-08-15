@@ -34,65 +34,74 @@ const Activity = () => {
         </div>
       
         {/* Judges and Contestants Here */}
-        <div className='flex md:flex-row flex-col gap-6'>
+        {TotalPercentage === 100
         
-            {/* Judges Container here */}
-            <div className='w-full max-h-96 border p-4 shadow h-fit'>
-                <div className="flex justify-between items-center mb-2">
-                    <h1 className='text-lg font-bold'>Judges</h1>
-                    <NewJudgeModal judges={judges} setJudges={setJudges} />
+        ?   <div className='flex md:flex-row flex-col gap-6'>
+            
+                {/* Judges Container here */}
+                <div className='w-full max-h-96 border p-4 shadow h-fit'>
+                    <div className="flex justify-between items-center mb-2">
+                        <h1 className='text-lg font-bold'>Judges</h1>
+                        <NewJudgeModal judges={judges} setJudges={setJudges} />
+                    </div>
+
+                    <div className="overflow-x-auto max-h-72">
+                        <table className="table">
+                            {/* head */}
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th className='flex justify-end'>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {judges.map((judge,index) =>
+                                    <tr key={index}>
+                                        <td>{judge.fullname}</td>
+                                        <td className='flex justify-end'></td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <div className="overflow-x-auto max-h-72">
-                    <table className="table">
-                        {/* head */}
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th className='flex justify-end'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {judges.map((judge,index) =>
+                {/* Contestants Container here */}
+                <div className='w-full max-h-96 border p-4 shadow h-fit'>
+                    <div className="flex justify-between items-center mb-2">
+                        <h1 className='text-lg font-bold'>Contestants</h1>
+                        <NewContestantModal contestants={contestants} setContestants={setContestants} />
+                    </div>
+
+                    <div className="overflow-x-auto max-h-72">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th className='flex justify-end'>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {contestants.map((contestant,index) => 
                                 <tr key={index}>
-                                    <td>{judge.fullname}</td>
+                                    <td>{contestant.contestant}</td>
                                     <td className='flex justify-end'></td>
                                 </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                )}                   
+                            </tbody>
+                        </table>
+                    </div>
 
-            {/* Contestants Container here */}
-            <div className='w-full max-h-96 border p-4 shadow h-fit'>
-                <div className="flex justify-between items-center mb-2">
-                    <h1 className='text-lg font-bold'>Contestants</h1>
-                    <NewContestantModal contestants={contestants} setContestants={setContestants} />
-                </div>
-
-                <div className="overflow-x-auto max-h-72">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th className='flex justify-end'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {contestants.map((contestant,index) => 
-                            <tr key={index}>
-                                <td>{contestant.contestant}</td>
-                                <td className='flex justify-end'></td>
-                            </tr>
-                            )}                   
-                        </tbody>
-                    </table>
                 </div>
 
             </div>
 
-        </div>
+        :   <div className="flex md:flex-row flex-col gap-6 item-center">
+                <div className="p-4 shadow-md">
+                    Criteria Total must be 100% before you can add Judges & Contestants
+                </div>
+            </div>
+        }
    
 
         
