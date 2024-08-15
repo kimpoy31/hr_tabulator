@@ -85,11 +85,13 @@ class JudgeController
         $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
         $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
         $judge = UsersInformation::where('activity_id', $activity_id)->where('status','active')->get();
+        $scoresheet = Score::where('activity_id', $activity_id)->where('status','active')->get();
         
-        return Inertia::render('Welcome', [
+        return Inertia::render('JudgePage', [
             'activity' => $activity,
             'criterias' => $criterias,
             'contestants' => $contestants,
+            'scoresheet' => '',
             'judge' => $judge,
         ]);
     }
