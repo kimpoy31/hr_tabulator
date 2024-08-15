@@ -33,6 +33,7 @@ export interface Contestant {
     activity_id: number;
     contestant:string;
     status: 'active'|'inactive';
+    scoresheet:Score[];
 }
 
 export interface Score {
@@ -43,9 +44,6 @@ export interface Score {
     contestant_id: number;
     status: 'active'|'inactive';
     score:number;
-    criteriaInformation: Criteria;
-    judgeInformation:UserInformation;
-    contestantInformation:Contestant;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {

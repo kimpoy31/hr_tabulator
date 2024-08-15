@@ -9,18 +9,16 @@ const JudgePage = () => {
     const [activity, setActivity] = useState<Activity | undefined>()
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [contestants, setContestants] = useState<Contestant[]>([])
-    const [scoresheet, setScoresheet] = useState<Score[]>([])
 
     useEffect(() => {
         setActivity(props.activity)
         setCriterias(props.criterias)
         setContestants(props.contestants)
-        setScoresheet(props.scoresheet)
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
-    useEffect(() => {
-        console.log(props)
-    },[scoresheet])
+    const inputOnChange = () => {
+
+    }
 
   return (
     <div className='lg:px-32 px-4 py-4'>
@@ -40,12 +38,35 @@ const JudgePage = () => {
         ?   <div className='w-full text-center p-8 bg-slate-100 mt-4 shadow-md uppercase font-bold'>
                 Please contact administrator
             </div>
-        :   <div>
-                {scoresheet.map((score,index) => 
-                    <div key={index}>
-                        {score.criteriaInformation.criteria}
-                    </div> 
-                )}
+        :   <div className="overflow-x-auto">
+              <table className="table table-xs">
+                <thead>
+                  <tr>
+                    <th>Contestant</th>
+                    {criterias.map((criteria,index) => 
+                      <th key={index} className='text-center'>
+                        <div className='uppercase'>{criteria.criteria + ' ' + criteria.percentage + '%'}</div>
+                        <div className='text-lg'>(1-100)</div>
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {contestants.map((contestant,index) => 
+                    <tr key={index}>
+                      <th>{contestant.contestant}</th>
+                      {contestant.scoresheet.map((sheet,index) => 
+                        <th key={index} className='text-center'>
+                          <input 
+                            type="text" 
+                            value={sheet.score} 
+                            className="input input-xs input-bordered w-full max-w-12 text-center" />
+                        </th>
+                      )}
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
         }
         
