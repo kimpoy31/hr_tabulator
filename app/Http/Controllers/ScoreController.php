@@ -62,7 +62,7 @@ class ScoreController
             }
         }
 
-        return $contestants;
+        return response()->json(['message' => 'Scores updated successfully'], 200);
     }
 
 }

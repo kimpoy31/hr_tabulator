@@ -1,3 +1,4 @@
+import ConfirmSubmissionModal from '@/Modals/ConfirmSubmissionModal'
 import { Activity, Contestant, Criteria, PageProps, Score } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
 import axios from 'axios'
@@ -10,6 +11,7 @@ const JudgePage = () => {
     const [activity, setActivity] = useState<Activity | undefined>()
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [contestants, setContestants] = useState<Contestant[]>([])
+    const [hasEdited, setHadEdited] = useState<boolean>(false)
 
     useEffect(() => {
         setActivity(props.activity)
@@ -25,19 +27,20 @@ const JudgePage = () => {
         updatedContestantRecord[arrayIndex].scoresheet[sheetIndex].score = newScore > 100 ? 100 : newScore
         return updatedContestantRecord;
       })
+
+      setHadEdited(true);
     }
 
     const handleSave = async() => {
       try {
         const response = await axios.post(route('score.update', { contestants }))
-      
-        console.log('response below')
-        console.log(response)
+        if(response.status === 200){
+          setHadEdited(false)
+        }
       } catch (error) {
-        
+        console.log(error)
       }
 
-      // console.log(contestants)
     }
 
   return (
@@ -92,8 +95,8 @@ const JudgePage = () => {
         }
 
         <div className="w-full flex justify-end gap-1 mt-4">
-          <button className="btn btn-outline" onClick={() => handleSave()}>Save</button>
-          {/* <button className="btn btn-primary" onClick={() => test()}>Submit Scoresheet</button> */}
+          <button className="btn bg-indigo-500 text-white" onClick={() => handleSave()} disabled={!hasEdited} >Save</button>
+          <ConfirmSubmissionModal contestants={contestants} hasEdited={hasEdited} />
         </div>
     </div>
   )
