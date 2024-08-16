@@ -1,4 +1,5 @@
 import { Contestant } from '@/types';
+import { Link } from '@inertiajs/react';
 import React, { useRef } from 'react'
 
 const ConfirmSubmissionModal = ({ contestants, hasEdited } : { contestants:Contestant[] , hasEdited:boolean } ) => {
@@ -33,10 +34,10 @@ const ConfirmSubmissionModal = ({ contestants, hasEdited } : { contestants:Conte
                     <p>You will be logged out</p>
                   </div>
                 }
-                {/* <div className="mt-1">
-                  <button className="btn btn-sm uppercase text-xs">back to scoresheet</button>
-                  <button className="btn btn-sm uppercase text-xs">Submit</button>
-                </div> */}
+                <div className="mt-1 w-full flex justify-end">
+                  <button className="btn btn-sm uppercase text-xs">Cancel</button>
+                  <Link href={route('logout')} className="btn btn-primary btn-sm uppercase text-xs">Confirm</Link>
+                </div>
             </div>
         </dialog>
     </>
