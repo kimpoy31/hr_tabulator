@@ -57,9 +57,6 @@ class ScoreController
 
                 if($score['score'] > 0){
                     $Score->score = $score['score'];
-
-
-                    // $Score->fill($score);
                     $Score->save();
                 }
             }

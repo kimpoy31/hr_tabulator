@@ -64,7 +64,7 @@ const JudgePage = () => {
                   <tr>
                     <th>Contestant</th>
                     {criterias.map((criteria,index) => 
-                      <th key={index} className='text-center'>
+                      <th key={index} className='md:text-center text-end'>
                         <div className='uppercase'>{criteria.criteria + ' ' + criteria.percentage + '%'}</div>
                         <div className='text-lg'>(1-100)</div>
                       </th>
@@ -76,7 +76,7 @@ const JudgePage = () => {
                     <tr key={index}>
                       <th>{contestant.contestant}</th>
                       {contestant.scoresheet.map((sheet,sheetIndex) => 
-                        <th key={sheetIndex} className='text-center'>
+                        <th key={sheetIndex} className='md:text-center text-end'>
                           <input 
                             type="text" 
                             value={sheet.score} 
