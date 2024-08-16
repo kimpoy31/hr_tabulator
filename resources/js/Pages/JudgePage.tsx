@@ -14,10 +14,22 @@ const JudgePage = () => {
         setActivity(props.activity)
         setCriterias(props.criterias)
         setContestants(props.contestants)
+
+        console.log(props)
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
-    const inputOnChange = () => {
+    const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
+      newScore = Number.isNaN(newScore) ? 0 : newScore
 
+      setContestants(prevState => {
+        const updatedContestantRecord = [...prevState];
+        updatedContestantRecord[arrayIndex].scoresheet[sheetIndex].score = newScore > 100 ? 100 : newScore
+        return updatedContestantRecord;
+      })
+    }
+
+    const test = () => {
+      console.log(contestants)
     }
 
   return (
@@ -55,11 +67,12 @@ const JudgePage = () => {
                   {contestants.map((contestant,index) => 
                     <tr key={index}>
                       <th>{contestant.contestant}</th>
-                      {contestant.scoresheet.map((sheet,index) => 
-                        <th key={index} className='text-center'>
+                      {contestant.scoresheet.map((sheet,sheetIndex) => 
+                        <th key={sheetIndex} className='text-center'>
                           <input 
                             type="text" 
                             value={sheet.score} 
+                            onChange={(e) => inputOnChange(index, sheetIndex ,Number(e.target.value))}
                             className="input input-xs input-bordered w-full max-w-12 text-center" />
                         </th>
                       )}
@@ -69,7 +82,11 @@ const JudgePage = () => {
               </table>
             </div>
         }
-        
+
+        <div className="w-full flex justify-end gap-1 mt-4">
+          <button className="btn btn-outline" onClick={() => test()}>Save</button>
+          <button className="btn btn-primary" onClick={() => test()}>Submit Scoresheet</button>
+        </div>
     </div>
   )
 }
