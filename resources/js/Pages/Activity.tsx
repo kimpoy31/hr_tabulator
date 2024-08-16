@@ -1,6 +1,7 @@
 import NewContestantModal from "@/Modals/NewContestantModal";
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
+import ViewTabulationSheetModal from "@/Modals/ViewTabulationSheetModal";
 import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
@@ -32,7 +33,11 @@ const Activity = () => {
             <h1 className='text-3xl uppercase font-extrabold pt-4'>{activityInfo.activity}</h1>
             <p>{activityInfo.description}</p>
         </div>
-      
+        
+        <div className="my-2">
+            <ViewTabulationSheetModal contestants={contestants} activity_id={props.activity.id} />
+        </div>
+
         {/* Judges and Contestants Here */}
         {TotalPercentage === 100
         

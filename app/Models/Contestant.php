@@ -24,7 +24,7 @@ class Contestant extends Model
                     ->where('judge_id',$user->id)
                     ->where('contestant_id',$this->id)
                     ->get();
-        }
+    }
 
     use HasFactory;
 }

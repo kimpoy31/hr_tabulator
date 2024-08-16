@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Score;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class ScoreController
 {
@@ -63,6 +64,23 @@ class ScoreController
         }
 
         return response()->json(['message' => 'Scores updated successfully'], 200);
+    }
+
+    function fetch (Request $request){
+        $user = Auth::user();
+        $role = $user->userInformation->role;
+
+        if($role !== 'admin'){
+            return to_route('judge.show');
+        }
+
+        $validatedData = $request->validate([
+            'activity_id' => 'integer|required',
+        ]);
+
+        $scores = Score::where('activity_id',$validatedData['activity_id'])->get();
+
+        return response()->json(['scores' => $scores], 200);
     }
 
 }
