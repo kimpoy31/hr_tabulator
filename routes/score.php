@@ -9,5 +9,6 @@ use App\Http\Controllers\ScoreController;
 Route::middleware(['auth'])->group(function () {
     
     Route::post('/score-create', [ScoreController::class, 'create'])->name('score.create');
+    Route::post('/score-update', [ScoreController::class, 'update'])->name('score.update');
 
 });

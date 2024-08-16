@@ -45,4 +45,27 @@ class ScoreController
 
         return response()->json(['message' => 'Scores updated or created successfully'], 200);
     }
+
+
+    function update (Request $request) {
+
+        $contestants = $request->contestants;
+
+        foreach($contestants as $contestant){
+            foreach($contestant['scoresheet'] as $score){
+                $Score = Score::findOrFail($score['id']);
+
+                if($score['score'] > 0){
+                    $Score->score = $score['score'];
+
+
+                    // $Score->fill($score);
+                    $Score->save();
+                }
+            }
+        }
+
+        return $contestants;
+    }
+
 }

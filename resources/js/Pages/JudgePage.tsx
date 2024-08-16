@@ -1,5 +1,6 @@
 import { Activity, Contestant, Criteria, PageProps, Score } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { MdLogout } from 'react-icons/md'
 
@@ -14,8 +15,6 @@ const JudgePage = () => {
         setActivity(props.activity)
         setCriterias(props.criterias)
         setContestants(props.contestants)
-
-        console.log(props)
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
     const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
@@ -28,8 +27,17 @@ const JudgePage = () => {
       })
     }
 
-    const test = () => {
-      console.log(contestants)
+    const handleSave = async() => {
+      try {
+        const response = await axios.post(route('score.update', { contestants }))
+      
+        console.log('response below')
+        console.log(response)
+      } catch (error) {
+        
+      }
+
+      // console.log(contestants)
     }
 
   return (
@@ -84,8 +92,8 @@ const JudgePage = () => {
         }
 
         <div className="w-full flex justify-end gap-1 mt-4">
-          <button className="btn btn-outline" onClick={() => test()}>Save</button>
-          <button className="btn btn-primary" onClick={() => test()}>Submit Scoresheet</button>
+          <button className="btn btn-outline" onClick={() => handleSave()}>Save</button>
+          {/* <button className="btn btn-primary" onClick={() => test()}>Submit Scoresheet</button> */}
         </div>
     </div>
   )
