@@ -21,7 +21,7 @@ class Contestant extends Model
         $user = Auth::user();
 
         return $scoresheet = Score::where('activity_id',$this->activity_id)
-                    ->where('judge_id',$user->id)
+                    // ->where('judge_id',$user->id)
                     ->where('contestant_id',$this->id)
                     ->get();
     }

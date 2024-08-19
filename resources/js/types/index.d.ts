@@ -44,6 +44,9 @@ export interface Score {
     contestant_id: number;
     status: 'active'|'inactive';
     score:number;
+    activityInformation: Activity;
+    criteriaInformation: Criteria;
+    judgeInformation:UserInformation;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
