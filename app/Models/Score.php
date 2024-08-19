@@ -20,6 +20,7 @@ class Score extends Model
         'judgeInformation',
         'criteriaInformation',
         'activityInformation',
+        'computedScore',
     ];
 
     public function getJudgeInformationAttribute () {
@@ -36,6 +37,15 @@ class Score extends Model
 
     public function getContestantInformationAttribute () {
         return $contestantInfo = Contestant::find($this->contestant_id);
+    }
+
+    public function getComputedScoreAttribute () {
+        if($this->score === 0){
+            return 0;
+        }
+        
+        $score = ($this->score / 100) * ($this->criteriaInformation->percentage / 100) * 100;
+        return $score;
     }
 
     use HasFactory;

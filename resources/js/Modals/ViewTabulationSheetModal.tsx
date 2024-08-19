@@ -3,12 +3,19 @@ import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+interface TotalScoreByJudge {
+  contestant: string;
+  contestant_id: number;
+  judge: number;
+  judge_id: number;
+  totalScores: {
+    score:number;
+  }[]
+}
+
 const ViewTabulationSheetModal = ({contestants, activity_id} : {contestants:Contestant[], activity_id:number}) => {
-
-    const [scores, setScores] = useState<Score[]>([])
-
      const openModal = () => {
-        fetchScores()
+        console.log(contestants)
 
         const modal = document.getElementById('viewTabulationModal');
         if (modal) {
@@ -16,51 +23,87 @@ const ViewTabulationSheetModal = ({contestants, activity_id} : {contestants:Cont
         }  
     };
 
-    const fetchScores = async() => {
-      console.log(contestants)
-
-      // try {
-      //   const response = await axios.get(route('score.fetch', { activity_id }))
-      //   if(response.data){
-      //     setScores(response.data.scores)
-      //     console.log(response.data.scores)
-      //   }
-      // } catch (error) {
-      //   console.log(error)
-      // }
-    }
+    // function calculateTotalScoresByJudge(scores: Score[]): TotalScoreByJudge[] {
+    //   return scores.reduce((acc, score) => {
+    //     const { judge_id, computedScore } = score;
+    //     const existingEntry = acc.find(item => item.judge_id === judge_id);
+    
+    //     if (existingEntry) {
+    //       existingEntry.totalScore += computedScore;
+    //     } else {
+    //       acc.push({ judge_id, totalScore: computedScore });
+    //     }
+    
+    //     return acc;
+    //   }, [] as TotalScoreByJudge[]);
+    // }
 
   return (
     <>
         <button className="btn bg-indigo-600 text-white btn-sm" onClick={()=>openModal()}>Tabulation sheet</button>
         <dialog id="viewTabulationModal" className="modal">
-        <div className="modal-box w-full max-w-screen-md">
-            <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-            </form>
-            <h3 className="font-bold text-lg uppercase mb-2">Tabulation sheet</h3>
+          <div className="modal-box w-full max-w-screen-md flex flex-col gap-4">
+              <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+              </form>
+              
 
-          <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
-                <tr className="border">
-                  <th></th>
-                  <th>Name</th>
-                  <th>Job</th>
-                  <th>Favorite Color</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border">
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="overflow-x-auto">
+              <h3 className="font-bold text-lg uppercase mb-2">Tabulation sheet</h3>
+              <table className="table">
+                <thead>
+                  <tr className="border">
+                    <th>Contestant</th>
+                    {contestants.map((info,index) => 
+                      <th key={index}>
+                        Judge {index + 1}
+                      </th>
+                    )}
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {contestants.map((contestant,index) => 
+                    <tr className="border" key={index}>
+                      <th>{contestant.contestant}</th>
+                      {contestant.totalAverage.map((total,index) => 
+                        <th key={index}>{total.totalScore}</th>
+                      )}
+                      <th>{contestant.overallTotalAverage}</th>
+                    </tr>
+                    )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* <div className="overflow-x-auto">
+              <h3 className="font-bold text-lg uppercase mb-2">Franz Valencia</h3>
+              <table className="table">
+                <thead>
+                  <tr className="border">
+                    <th>Contestant</th>
+                    {contestants.map((info,index) => 
+                      <th key={index}>
+                        Judge {index + 1}
+                      </th>
+                    )}
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {contestants.map((contestant,index) => 
+                    <tr className="border" key={index}>
+                      <th>{contestant.contestant}</th>
+                      {contestant.totalAverage.map((total,index) => 
+                        <th key={index}>{total.totalScore}</th>
+                      )}
+                      <th>{contestant.overallTotalAverage}</th>
+                    </tr>
+                    )}
+                </tbody>
+              </table>
+            </div> */}
           </div>
-        </div>
         </dialog>
     </>
   )

@@ -34,6 +34,12 @@ export interface Contestant {
     contestant:string;
     status: 'active'|'inactive';
     scoresheet:Score[];
+    submittedScoresheet:Score[];
+    totalAverage: {
+        judge_id:number;
+        totalScore:number;
+    }[]
+    overallTotalAverage:number;
 }
 
 export interface Score {
@@ -44,6 +50,7 @@ export interface Score {
     contestant_id: number;
     status: 'active'|'inactive';
     score:number;
+    computedScore:number;
     activityInformation: Activity;
     criteriaInformation: Criteria;
     judgeInformation:UserInformation;
