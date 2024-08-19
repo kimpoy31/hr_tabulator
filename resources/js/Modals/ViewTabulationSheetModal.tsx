@@ -1,55 +1,37 @@
-import { Contestant, PageProps, Score } from "@/types";
+import { Contestant, PageProps, Score, UserInformation } from "@/types";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaRegEye } from "react-icons/fa";
 
-interface TotalScoreByJudge {
-  contestant: string;
-  contestant_id: number;
-  judge: number;
-  judge_id: number;
-  totalScores: {
-    score:number;
-  }[]
-}
-
-const ViewTabulationSheetModal = ({contestants, activity_id} : {contestants:Contestant[], activity_id:number}) => {
-     const openModal = () => {
-        console.log(contestants)
-
-        const modal = document.getElementById('viewTabulationModal');
-        if (modal) {
-          (modal as HTMLDialogElement).showModal();
-        }  
-    };
-
-    // function calculateTotalScoresByJudge(scores: Score[]): TotalScoreByJudge[] {
-    //   return scores.reduce((acc, score) => {
-    //     const { judge_id, computedScore } = score;
-    //     const existingEntry = acc.find(item => item.judge_id === judge_id);
+const ViewTabulationSheetModal = ({contestants, judge} : {contestants:Contestant[], judge:UserInformation}) => {  
     
-    //     if (existingEntry) {
-    //       existingEntry.totalScore += computedScore;
-    //     } else {
-    //       acc.push({ judge_id, totalScore: computedScore });
-    //     }
-    
-    //     return acc;
-    //   }, [] as TotalScoreByJudge[]);
-    // }
+  const [judgeInfo, setJudgeInfo] = useState<UserInformation|undefined>()
+
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    setJudgeInfo(judge)
+  },[judge])
+
+  const openModal = () => {
+    const modal = document.getElementById('viewTabulationModal');
+    if (modal) {
+      (modal as HTMLDialogElement).showModal();
+    }  
+  };
 
   return (
     <>
-        <button className="btn bg-indigo-600 text-white btn-sm" onClick={()=>openModal()}>Tabulation sheet</button>
-        <dialog id="viewTabulationModal" className="modal">
+      <button className="btn btn-primary btn-square btn-xs" onClick={()=>{openModal()}}><FaRegEye /></button>
+      <dialog id="viewTabulationModal" className="modal">
           <div className="modal-box w-full max-w-screen-md flex flex-col gap-4">
               <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
               </form>
-              
 
             <div className="overflow-x-auto">
-              <h3 className="font-bold text-lg uppercase mb-2">Tabulation sheet</h3>
+              <h3 className="font-bold text-lg uppercase mb-2">Tabulation sheet {judgeInfo?.fullname}</h3>
               <table className="table">
                 <thead>
                   <tr className="border">
@@ -77,7 +59,7 @@ const ViewTabulationSheetModal = ({contestants, activity_id} : {contestants:Cont
             </div>
 
             {/* <div className="overflow-x-auto">
-              <h3 className="font-bold text-lg uppercase mb-2">Franz Valencia</h3>
+              
               <table className="table">
                 <thead>
                   <tr className="border">
@@ -103,8 +85,9 @@ const ViewTabulationSheetModal = ({contestants, activity_id} : {contestants:Cont
                 </tbody>
               </table>
             </div> */}
+
           </div>
-        </dialog>
+      </dialog>
     </>
   )
 }

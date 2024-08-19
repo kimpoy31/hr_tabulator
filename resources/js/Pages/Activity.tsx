@@ -33,10 +33,6 @@ const Activity = () => {
             <h1 className='text-3xl uppercase font-extrabold pt-4'>{activityInfo.activity}</h1>
             <p>{activityInfo.description}</p>
         </div>
-        
-        <div className="my-2">
-            <ViewTabulationSheetModal contestants={contestants} activity_id={props.activity.id} />
-        </div>
 
         {/* Judges and Contestants Here */}
         {TotalPercentage === 100
@@ -63,7 +59,9 @@ const Activity = () => {
                                 {judges.map((judge,index) =>
                                     <tr key={index}>
                                         <td>{judge.fullname}</td>
-                                        <td className='flex justify-end'></td>
+                                        <td className='flex justify-end'>
+                                            <ViewTabulationSheetModal contestants={contestants} judge={judge} />
+                                        </td>
                                     </tr>
                                 )}
                             </tbody>

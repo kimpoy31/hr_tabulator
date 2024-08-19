@@ -6,6 +6,7 @@ export interface User {
 }
 
 export interface UserInformation {
+    id: number;
     user_id: number;
     activity_id: number;
     fullname: string;
