@@ -10,6 +10,7 @@ use App\Models\ActivityModel;
 use App\Models\Criteria;
 use App\Models\Contestant;
 use App\Models\Score;
+use App\Models\ScoresRange;
 use Inertia\Inertia;
 
 class ActivityController
@@ -21,6 +22,12 @@ class ActivityController
         ]);
 
         $activity = ActivityModel::create($validatedData);
+
+        if( $activity ){
+
+            ScoresRange::create(['activity_id' => $activity['id']]);
+
+        }
 
         return response()->json([
             'createdData' => $activity,
