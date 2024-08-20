@@ -9,6 +9,7 @@ use App\Models\UsersInformation;
 use App\Models\ActivityModel;
 use App\Models\Criteria;
 use App\Models\Contestant;
+use App\Models\Score;
 use Inertia\Inertia;
 
 class ActivityController
@@ -49,6 +50,23 @@ class ActivityController
             'judges' => $judges,
             'activity' => $activity,
             'criterias' => $criterias,
+            'contestants' => $contestants
+        ]);
+    }
+
+    function judgeTabulation ($activity_id, $judge_id){
+        $user = Auth::user();
+        $role = $user->userInformation->role;
+
+        if($role !== 'admin'){
+            return to_route('judge.show');
+        }
+ 
+        $activity = ActivityModel::find($activity_id);
+        $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
+
+        return Inertia::render('Tabulation', [
+            'activity' => $activity,
             'contestants' => $contestants
         ]);
     }

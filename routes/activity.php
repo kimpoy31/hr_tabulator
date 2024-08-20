@@ -11,6 +11,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/activity-create', [ActivityController::class, 'create'])->name('activity.create');
     Route::get('/activity-fetch', [ActivityController::class, 'fetchAll'])->name('activity.fetchAll');
 
-   // Add the new route for activity by ID
+    // Add the new route for activity by ID
    Route::get('/activity/{id}', [ActivityController::class, 'show'])->name('activity.show');
+    //  Tabulation data    
+   Route::get('/activity/{activity_id}/judge/{judge_id}', [ActivityController::class, 'judgeTabulation'])->name('activity.judge.tabulation');
+
 });

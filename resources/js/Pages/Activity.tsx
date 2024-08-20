@@ -6,6 +6,7 @@ import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaRegEye } from "react-icons/fa";
 
 const Activity = () => {
     const { props } = usePage<PageProps>();
@@ -23,6 +24,8 @@ const Activity = () => {
         setJudges(props.judges)
         setCriterias(props.criterias)
         setContestants(props.contestants)
+
+        // console.log(props)
     },[])
 
   return (
@@ -60,7 +63,9 @@ const Activity = () => {
                                     <tr key={index}>
                                         <td>{judge.fullname}</td>
                                         <td className='flex justify-end'>
-                                            <ViewTabulationSheetModal contestants={contestants} judge={judge} />
+                                            <Link key={index} href={route('activity.judge.tabulation', { activity_id: props.activity.id, judge_id:judge.id })} className="btn btn-square btn-xs" >
+                                                <FaRegEye />
+                                            </Link>
                                         </td>
                                     </tr>
                                 )}
