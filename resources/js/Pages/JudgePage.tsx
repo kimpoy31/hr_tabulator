@@ -96,7 +96,6 @@ const JudgePage = () => {
 
         <div className="w-full flex justify-end gap-1 mt-4">
           <button className="btn bg-indigo-500 text-white" onClick={() => handleSave()} disabled={!hasEdited} >Save</button>
-          <ConfirmSubmissionModal contestants={contestants} hasEdited={hasEdited} />
         </div>
     </div>
   )
