@@ -1,4 +1,3 @@
-import ConfirmSubmissionModal from '@/Modals/ConfirmSubmissionModal'
 import { Activity, Contestant, Criteria, PageProps, Score } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
 import axios from 'axios'

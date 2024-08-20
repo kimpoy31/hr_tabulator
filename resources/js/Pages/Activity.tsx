@@ -2,6 +2,7 @@ import NewContestantModal from "@/Modals/NewContestantModal";
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
 import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
+import { FaMinus } from "react-icons/fa6";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -59,13 +60,13 @@ const Activity = () => {
                                 {judges.map((judge,index) =>
                                     <tr key={index}>
                                         <td>{judge.fullname}</td>
-                                        <td className='flex justify-end'>
+                                        <td className='flex justify-end gap-1'>
                                             <a key={index} href={route('activity.judge.tabulation', { activity_id: props.activity.id, judge_id:judge.id })} target="_blank" className="btn btn-outline btn-xs" >
                                                 <FaRegEye /> Scoresheet
                                             </a>
                                         </td>
                                     </tr>
-                                )}
+                                )}  
                             </tbody>
                         </table>
                     </div>

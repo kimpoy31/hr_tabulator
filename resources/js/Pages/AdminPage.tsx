@@ -2,7 +2,7 @@ import NewActivityModal from '@/Modals/NewActivityModal'
 import { Activity, PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { FaRegEye } from "react-icons/fa";
+import { FaRegEye,FaMinus } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 
 const AdminPage = () => {
@@ -43,8 +43,9 @@ const AdminPage = () => {
                                 <tr key={index}>
                                     <td>{activity.activity}</td>
                                     <td>{activity.description ?? 'no description'}</td>
-                                    <td className='flex justify-end'>
-                                        <Link href={route('activity.show', { id: activity.id })} className='btn btn-square btn-sm'><FaRegEye /></Link>
+                                    <td className='flex justify-end gap-1'>
+                                        <Link href={route('activity.show', { id: activity.id })} className='btn btn-square btn-xs'><FaRegEye /></Link>
+                                        {/* <button onClick={() => alert('deleting')} className='btn btn-square btn-xs'><FaMinus /></button> */}
                                     </td>
                                 </tr>
                             )}

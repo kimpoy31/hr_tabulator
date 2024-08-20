@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 const Tabulation = () => {
     
     const { props } = usePage<PageProps>();
-    const activityInfo = props.activity;
+    const judges = props.judges;
 
     const [contestants, setContestants] = useState<Contestant[]>([])
     const [criterias, setCriterias] = useState<Criteria[]>([])
@@ -28,7 +28,6 @@ const Tabulation = () => {
         setContestants(props.contestants)
         setCriterias(props.criterias)
         setJudge(props.judge)
-        console.log(props) 
     },[])
 
   return (
@@ -39,7 +38,7 @@ const Tabulation = () => {
             <thead>
                 <tr className="border">
                 <th>Contestant</th>
-                {contestants.map((info,index) => 
+                {judges.map((info,index) => 
                     <th key={index}>
                     Judge {index + 1}
                     </th>
@@ -91,7 +90,7 @@ const Tabulation = () => {
                       <th>{contestant.contestant}</th>
                       {contestant.submittedScoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='text-center text-xs'>
-                          <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ 100 x {sheet.criteriaInformation.percentage} x 100 = {sheet.computedScore} </span> </p>
+                          <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ 100 x {sheet.criteriaInformation.percentage} x 100 = {(Math.round(sheet.computedScore * 1000) / 1000)} </span> </p>
                         </th>
                       )}
                       <th className='text-xs text-indigo-700'>{calculateTotalComputedScore(contestant)}</th>

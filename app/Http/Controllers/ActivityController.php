@@ -67,6 +67,7 @@ class ActivityController
         $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
         $judge = UsersInformation::find($judge_id);
         $scores = Score::where('activity_id', $activity_id)->where('judge_id', $judge_id)->where('status','active')->get();
+        $judges = UsersInformation::where('activity_id', $activity_id)->where('status','active')->get();
 
         return Inertia::render('Tabulation', [
             'activity' => $activity,
@@ -74,6 +75,7 @@ class ActivityController
             'criterias' => $criterias,
             'judge' => $judge,
             'scores' => $scores,
+            'judges' => $judges,
         ]);
     }
 
