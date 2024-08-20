@@ -66,12 +66,14 @@ class ActivityController
         $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
         $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
         $judge = UsersInformation::find($judge_id);
+        $scores = Score::where('activity_id', $activity_id)->where('judge_id', $judge_id)->where('status','active')->get();
 
         return Inertia::render('Tabulation', [
             'activity' => $activity,
             'contestants' => $contestants,
             'criterias' => $criterias,
             'judge' => $judge,
+            'scores' => $scores,
         ]);
     }
 

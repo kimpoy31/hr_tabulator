@@ -60,9 +60,9 @@ const Activity = () => {
                                     <tr key={index}>
                                         <td>{judge.fullname}</td>
                                         <td className='flex justify-end'>
-                                            <Link key={index} href={route('activity.judge.tabulation', { activity_id: props.activity.id, judge_id:judge.id })} className="btn btn-square btn-xs" >
-                                                <FaRegEye />
-                                            </Link>
+                                            <a key={index} href={route('activity.judge.tabulation', { activity_id: props.activity.id, judge_id:judge.id })} target="_blank" className="btn btn-outline btn-xs" >
+                                                <FaRegEye /> Scoresheet
+                                            </a>
                                         </td>
                                     </tr>
                                 )}

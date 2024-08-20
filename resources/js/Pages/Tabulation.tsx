@@ -20,6 +20,10 @@ const Tabulation = () => {
         }));
     }
 
+    function calculateTotalComputedScore(contestant:Contestant) {
+        return contestant.submittedScoresheet.reduce((total, score) => total + score.computedScore, 0);
+    }
+
     useEffect(() => {
         setContestants(props.contestants)
         setCriterias(props.criterias)
@@ -70,7 +74,7 @@ const Tabulation = () => {
                   <tr className="border">
                     <th>Contestant</th>
                     {criterias.map((criteria,index) => 
-                      <th key={index} className='text-center text-xs'>
+                      <th key={index} className='text-xs'>
                         <div className='uppercase'>{criteria.criteria + ' ' + criteria.percentage + '%'}</div>
                         <div>(1-100)</div>
                       </th>
@@ -87,9 +91,10 @@ const Tabulation = () => {
                       <th>{contestant.contestant}</th>
                       {contestant.submittedScoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='text-center text-xs'>
-                          <span>{sheet.score}</span>
+                          <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ 100 x {sheet.criteriaInformation.percentage} x 100 = {sheet.computedScore} </span> </p>
                         </th>
                       )}
+                      <th className='text-xs text-indigo-700'>{calculateTotalComputedScore(contestant)}</th>
                     </tr>
                   )}
                 </tbody>
@@ -101,6 +106,7 @@ const Tabulation = () => {
             <hr className="w-full border-t border-gray-900 " />
             <p className='uppercase text-xs'>Judge signature</p>
         </div>
+
     </div>
   )
 }
