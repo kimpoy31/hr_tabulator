@@ -1,7 +1,6 @@
 import NewContestantModal from "@/Modals/NewContestantModal";
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
-import ViewTabulationSheetModal from "@/Modals/ViewTabulationSheetModal";
 import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
@@ -24,8 +23,6 @@ const Activity = () => {
         setJudges(props.judges)
         setCriterias(props.criterias)
         setContestants(props.contestants)
-
-        // console.log(props)
     },[])
 
   return (

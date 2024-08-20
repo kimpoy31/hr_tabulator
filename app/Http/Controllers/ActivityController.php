@@ -64,10 +64,14 @@ class ActivityController
  
         $activity = ActivityModel::find($activity_id);
         $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
+        $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
+        $judge = UsersInformation::find($judge_id);
 
         return Inertia::render('Tabulation', [
             'activity' => $activity,
-            'contestants' => $contestants
+            'contestants' => $contestants,
+            'criterias' => $criterias,
+            'judge' => $judge,
         ]);
     }
 
