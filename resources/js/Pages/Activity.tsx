@@ -25,7 +25,7 @@ const Activity = () => {
     }, 0);
 
     const handleScoringRangeSave = async() => {
-        if(isEditingScoringRange && rangeDbValue !== scoringRange){
+        if(isEditingScoringRange && scoringRange !== rangeDbValue){
             const response = await axios.post(route('range.update', { range:scoringRange, id:props.activity.scoringRange.id }))
             if(response.data){
                 setRangeDbValue(response.data.updatedRange)

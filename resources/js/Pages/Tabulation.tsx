@@ -1,4 +1,4 @@
-import { Contestant, Criteria, PageProps, UserInformation } from '@/types';
+import { Activity, Contestant, Criteria, PageProps, UserInformation } from '@/types';
 import { usePage } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react'
 
@@ -10,6 +10,7 @@ const Tabulation = () => {
     const [contestants, setContestants] = useState<Contestant[]>([])
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [judge, setJudge] = useState<UserInformation>()
+    const [activity, setActivity] = useState<Activity>()
     
     const filteredContestants = filterScoresheets(contestants,1)
 
@@ -28,10 +29,16 @@ const Tabulation = () => {
         setContestants(props.contestants)
         setCriterias(props.criterias)
         setJudge(props.judge)
+        setActivity(props.activity)
     },[])
 
   return (
     <div className='lg:px-32 px-4 pt-8'>
+        <div className='mb-4'>
+          <div className='text-3xl uppercase font-extrabold'>{  activity?.activity }</div>
+          <div className='text-lg text-gray-500 uppercase font-extrabold'>{  activity?.description }</div>
+        </div>
+
         <div className="overflow-x-auto">
             <h3 className="font-bold text-lg uppercase mb-2">Tabulation sheet</h3>
             <table className="table">
@@ -75,12 +82,12 @@ const Tabulation = () => {
                     {criterias.map((criteria,index) => 
                       <th key={index} className='text-xs'>
                         <div className='uppercase'>{criteria.criteria + ' ' + criteria.percentage + '%'}</div>
-                        <div>(1-100)</div>
+                        <div>(1-{activity?.scoringRange.range})</div>
                       </th>
                     )}
                     <th>
                         <div className='uppercase'>Total</div>
-                        <div>(100%)</div>
+                        <div>(1-{activity?.scoringRange.range})</div>
                     </th>
                   </tr>
                 </thead>
@@ -90,7 +97,7 @@ const Tabulation = () => {
                       <th>{contestant.contestant}</th>
                       {contestant.submittedScoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='text-center text-xs'>
-                          <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ 100 x {sheet.criteriaInformation.percentage} x 100 = {(Math.round(sheet.computedScore * 1000) / 1000)} </span> </p>
+                          <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ {activity?.scoringRange.range} x {sheet.criteriaInformation.percentage} x {activity?.scoringRange.range} = {(Math.round(sheet.computedScore * 1000) / 1000)} </span> </p>
                         </th>
                       )}
                       <th className='text-xs text-indigo-700'>{calculateTotalComputedScore(contestant)}</th>

@@ -40,11 +40,13 @@ class Score extends Model
     }
 
     public function getComputedScoreAttribute () {
+        $scoreRange = ScoresRange::where('activity_id',$this->activity_id)->first();
+
         if($this->score === 0){
             return 0;
         }
         
-        $score = ($this->score / 100) * ($this->criteriaInformation->percentage / 100) * 100;
+        $score = ($this->score / $scoreRange['range']) * ($this->criteriaInformation->percentage / 100) * $scoreRange['range'];
         return $score;
     }
 

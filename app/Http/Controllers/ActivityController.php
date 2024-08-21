@@ -92,7 +92,7 @@ class ActivityController
             'id' => 'required|integer'
         ]);
 
-        $toUpdate = ScoresRange::findOrFail(1);
+        $toUpdate = ScoresRange::findOrFail($validatedData['id']);
         $toUpdate->update(['range' => $validatedData['range']]);
         
         return response()->json(['updatedRange' => $validatedData['range']], 200);
