@@ -19,6 +19,14 @@ export interface Activity {
     activity:string;
     description:string;
     status: 'active'|'inactive';
+    scoringRange:ScoresRange
+}
+
+export interface ScoresRange {
+    id: number;
+    activity_id: number;
+    range: number;
+    status: 'active'|'inactive';
 }
 
 export interface Criteria {

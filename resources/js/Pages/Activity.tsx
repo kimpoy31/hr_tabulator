@@ -7,6 +7,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa";
+import axios from "axios";
 
 const Activity = () => {
     const { props } = usePage<PageProps>();
@@ -15,15 +16,27 @@ const Activity = () => {
     const [judges, setJudges] = useState<UserInformation[]>([])
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [contestants, setContestants] = useState<Contestant[]>([])
+    const [scoringRange, setScoringRange] = useState<number>(0)
+    const [isEditingScoringRange, setIsEditingScoringRange] = useState<boolean>(false)
 
     const TotalPercentage = criterias.reduce((total, item) => {
         return total + Number(item.percentage);
     }, 0);
 
+    const handleScoringRangeSave = async() => {
+        if(isEditingScoringRange){
+            const response = await axios.post(route('range.update', { range:scoringRange, id:props.activity.scoringRange.id }))
+            if(response.data){
+                setScoringRange(response.data.updatedRange)
+            }
+        }
+    }
+
     useEffect(() => {
         setJudges(props.judges)
         setCriterias(props.criterias)
         setContestants(props.contestants)
+        setScoringRange(props.activity.scoringRange.range)
     },[])
 
   return (
@@ -33,6 +46,20 @@ const Activity = () => {
         <div className="flex flex-col gap-0 mb-3">
             <h1 className='text-3xl uppercase font-extrabold pt-4'>{activityInfo.activity}</h1>
             <p>{activityInfo.description}</p>
+            <div className="text-sm mt-4 flex gap-2 items-center">
+                <button className="btn btn-xs btn-outline" onClick={() => {setIsEditingScoringRange(!isEditingScoringRange); handleScoringRangeSave()}}>{isEditingScoringRange ? "Save" : "Edit"}</button>
+                <div className="flex items-center">
+                    <div>Scoring range:</div>
+                    <input
+                        type="text"
+                        placeholder="Type here"
+                        className="input input-bordered input-xs text-base w-full max-w-16" 
+                        value={scoringRange}
+                        onChange={(e)=>setScoringRange(Number(e.target.value))}
+                        disabled={!isEditingScoringRange}
+                    />
+                </div>
+            </div>
         </div>
 
         {/* Judges and Contestants Here */}

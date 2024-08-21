@@ -86,4 +86,16 @@ class ActivityController
         ]);
     }
 
+    function updateScoringRange (Request $request) {
+        $validatedData = $request->validate([
+            'range' => 'required|integer',
+            'id' => 'required|integer'
+        ]);
+
+        $toUpdate = ScoresRange::findOrFail(1);
+        $toUpdate->update(['range' => $validatedData['range']]);
+        
+        return response()->json(['updatedRange' => $validatedData['range']], 200);
+    }
+
 }

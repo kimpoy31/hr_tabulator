@@ -12,5 +12,13 @@ class ActivityModel extends Model
         'description',
     ];
 
+    protected $appends = [
+        'scoringRange',
+    ];
+
+    public function getScoringRangeAttribute () {
+        return ScoresRange::where('activity_id', $this->id)->first();
+    }
+
     use HasFactory;
 }

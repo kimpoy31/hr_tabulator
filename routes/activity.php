@@ -9,6 +9,7 @@ use App\Http\Controllers\ActivityController;
 Route::middleware(['auth'])->group(function () {
     
     Route::post('/activity-create', [ActivityController::class, 'create'])->name('activity.create');
+    Route::post('/activity-update-range', [ActivityController::class, 'updateScoringRange'])->name('range.update');
     Route::get('/activity-fetch', [ActivityController::class, 'fetchAll'])->name('activity.fetchAll');
 
     // Add the new route for activity by ID
