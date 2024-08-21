@@ -11,11 +11,13 @@ const JudgePage = () => {
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [contestants, setContestants] = useState<Contestant[]>([])
     const [hasEdited, setHadEdited] = useState<boolean>(false)
+    const [scoringRange, setScoringRange] = useState<number>(0)
 
     useEffect(() => {
         setActivity(props.activity)
         setCriterias(props.criterias)
         setContestants(props.contestants)
+        setScoringRange(props.activity.scoringRange.range)
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
     const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
@@ -23,7 +25,7 @@ const JudgePage = () => {
 
       setContestants(prevState => {
         const updatedContestantRecord = [...prevState];
-        updatedContestantRecord[arrayIndex].scoresheet[sheetIndex].score = newScore > 100 ? 100 : newScore
+        updatedContestantRecord[arrayIndex].scoresheet[sheetIndex].score = newScore > scoringRange ? scoringRange : newScore
         return updatedContestantRecord;
       })
 
@@ -68,7 +70,7 @@ const JudgePage = () => {
                     {criterias.map((criteria,index) => 
                       <th key={index} className='md:text-center text-end'>
                         <div className='uppercase'>{criteria.criteria + ' ' + criteria.percentage + '%'}</div>
-                        <div className='text-lg'>(1-100)</div>
+                        <div className='text-lg'>(1-{scoringRange})</div>
                       </th>
                     )}
                   </tr>
