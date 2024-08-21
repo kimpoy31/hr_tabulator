@@ -17,6 +17,7 @@ const Activity = () => {
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [contestants, setContestants] = useState<Contestant[]>([])
     const [scoringRange, setScoringRange] = useState<number>(0)
+    const [rangeDbValue, setRangeDbValue] = useState<number>(0)
     const [isEditingScoringRange, setIsEditingScoringRange] = useState<boolean>(false)
 
     const TotalPercentage = criterias.reduce((total, item) => {
@@ -24,9 +25,10 @@ const Activity = () => {
     }, 0);
 
     const handleScoringRangeSave = async() => {
-        if(isEditingScoringRange){
+        if(isEditingScoringRange && rangeDbValue !== scoringRange){
             const response = await axios.post(route('range.update', { range:scoringRange, id:props.activity.scoringRange.id }))
             if(response.data){
+                setRangeDbValue(response.data.updatedRange)
                 setScoringRange(response.data.updatedRange)
             }
         }
@@ -37,6 +39,7 @@ const Activity = () => {
         setCriterias(props.criterias)
         setContestants(props.contestants)
         setScoringRange(props.activity.scoringRange.range)
+        setRangeDbValue(props.activity.scoringRange.range)
     },[])
 
   return (
