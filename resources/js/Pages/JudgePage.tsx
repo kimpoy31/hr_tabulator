@@ -34,7 +34,7 @@ const JudgePage = () => {
 
     const handleSave = async() => {
       try {
-        const response = await axios.post(route('score.update', { contestants }))
+        const response = await axios.post(route('score.update'), { contestants })
         if(response.status === 200){
           setHadEdited(false)
         }

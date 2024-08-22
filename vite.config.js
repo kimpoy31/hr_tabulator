@@ -10,4 +10,11 @@ export default defineConfig({
         }),
         react(),
     ],
+    server: {
+        host: '0.0.0.0',  // Allows access from external IPs
+        // port: 8000,      // Default port for Vite, adjust if needed
+        hmr: {
+            host:'192.168.14.104'
+        }
+    }
 });
