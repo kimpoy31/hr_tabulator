@@ -56,7 +56,7 @@ const Tabulation = () => {
             <tbody>
                 {contestants.map((contestant,index) => 
                 <tr className="border" key={index}>
-                    <th>{contestant.contestant}</th>
+                    <th className='uppercase text-sm'>{contestant.contestant}</th>
                     {contestant.totalAverage.map((total,index) => 
                     <th key={index}>{total.totalScore}</th>
                     )}
@@ -94,7 +94,7 @@ const Tabulation = () => {
                 <tbody>
                   {filteredContestants.map((contestant,index) => 
                     <tr key={index} className="border">
-                      <th>{contestant.contestant}</th>
+                      <th className='uppercase text-sm'>{contestant.contestant}</th>
                       {contestant.submittedScoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='text-center text-xs'>
                           <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ {activity?.scoringRange.range} x {sheet.criteriaInformation.percentage} x {activity?.scoringRange.range} = {(Math.round(sheet.computedScore * 1000) / 1000)} </span> </p>

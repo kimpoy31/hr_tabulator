@@ -83,7 +83,7 @@ const JudgePage = () => {
                         <th key={sheetIndex} className='md:text-center text-end'>
                           <input 
                             type="text" 
-                            value={sheet.score} 
+                            value={sheet.score !== 0 ? sheet.score : ''} 
                             onChange={(e) => inputOnChange(index, sheetIndex ,Number(e.target.value))}
                             className="input input-xs input-bordered w-full max-w-12 text-center" />
                         </th>
