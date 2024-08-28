@@ -11,10 +11,11 @@ const Tabulation = () => {
     const [criterias, setCriterias] = useState<Criteria[]>([])
     const [judge, setJudge] = useState<UserInformation>()
     const [activity, setActivity] = useState<Activity>()
+    const [overallComputedScores, setOverallComputedScores] = useState<number[]>([])
     
-    const filteredContestants = filterScoresheets(contestants,1)
+    const filteredContestants = filterScoresheets(contestants)
 
-    function filterScoresheets(contestants:Contestant[], judgeId:number) {
+    function filterScoresheets(contestants:Contestant[]) {
         return contestants.map(contestant => ({
           ...contestant,
           submittedScoresheet: contestant.submittedScoresheet.filter(scoreSheet => scoreSheet.judge_id === judge?.id)
@@ -25,12 +26,49 @@ const Tabulation = () => {
         return contestant.submittedScoresheet.reduce((total, score) => total + score.computedScore, 0);
     }
 
+    const getOverallComputedScores = (contestants: Contestant[]) => {
+      // Calculate the overall computed scores for all contestants
+      const scores = contestants.map((contestant) => {
+        const totalScore = calculateTotalComputedScore(contestant);
+        const averageScore = totalScore / judges.length;
+        return Math.round(averageScore * 1000) / 1000; // Round to 3 decimal places
+      });
+      
+      // Update the state with the new scores
+      setOverallComputedScores(scores);
+    };
+
+    // function that determines the ranking order
+    function getRanking(score: number, scores: number[]): string | number {
+      // Sort the scores array in descending order
+      const sortedScores = [...scores].sort((a, b) => b - a);
+    
+      // Find the index of the score in the sorted array
+      const index = sortedScores.findIndex(s => s === score);
+    
+      // Check if the score is found in the sorted array
+      if (index === -1) {
+        return "Score not found";
+      }
+    
+      // Check if there are other scores in the same rank
+      const rank = sortedScores.indexOf(score) + 1; // Rank starts from 1
+      const isTie = sortedScores.lastIndexOf(score) !== index;
+    
+      return isTie ? "tie" : rank;
+    }    
+
     useEffect(() => {
         setContestants(props.contestants)
+        getOverallComputedScores(props.contestants)
         setCriterias(props.criterias)
         setJudge(props.judge)
         setActivity(props.activity)
     },[])
+
+    useEffect(() => {
+      console.log(overallComputedScores)
+    },[contestants])
 
   return (
     <div className='lg:px-32 px-4 pt-8'>
@@ -51,6 +89,7 @@ const Tabulation = () => {
                     </th>
                 )}
                 <th className='text-indigo-800'>Total</th>
+                <th className='text-indigo-800'>Rank</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,7 +99,8 @@ const Tabulation = () => {
                     {contestant.totalAverage.map((total,index) => 
                     <th key={index}>{total.totalScore}</th>
                     )}
-                    <th className='text-indigo-800'>{contestant.overallTotalAverage}</th>
+                    <th className='text-indigo-800'>{(Math.round(contestant.overallTotalAverage * 1000) / 1000)}</th>
+                    <th className='text-indigo-800'>{getRanking((Math.round(contestant.overallTotalAverage * 1000) / 1000) , overallComputedScores)}</th>
                 </tr>
                 )}
             </tbody>
@@ -94,7 +134,7 @@ const Tabulation = () => {
                 <tbody>
                   {filteredContestants.map((contestant,index) => 
                     <tr key={index} className="border">
-                      <th className='uppercase text-sm'>{contestant.contestant}</th>
+                      <th className='uppercase text-sm  '>{contestant.contestant}</th>
                       {contestant.submittedScoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='text-center text-xs'>
                           <p className='flex'><span className="text-indigo-700">{sheet.score}</span><span className='text-xs'>/ {activity?.scoringRange.range} x {sheet.criteriaInformation.percentage} x {activity?.scoringRange.range} = {(Math.round(sheet.computedScore * 1000) / 1000)} </span> </p>
