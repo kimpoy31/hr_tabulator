@@ -21,6 +21,7 @@ const JudgePage = () => {
         setContestants(props.contestants)
         setScoringRange(props.activity.scoringRange.range)
         setMinScoringRange(props.activity.scoringRange.range - (25 / 100) * props.activity.scoringRange.range )
+        console.log(contestants)
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
     const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
@@ -46,6 +47,14 @@ const JudgePage = () => {
         console.log(error)
       }
 
+    }
+
+    function calculateComputedValue(scoresheet:Score[]) {
+      return scoresheet.reduce((total, sheet) => {
+        const score = sheet.score;
+        const percentage = sheet.criteriaInformation.percentage;
+        return total + (score / scoringRange) * (percentage / scoringRange) * scoringRange;
+      }, 0);
     }
 
   return (
@@ -77,6 +86,8 @@ const JudgePage = () => {
                         <div className='text-lg'>({minScoringRange}-{scoringRange})</div>
                       </th>
                     )}
+                    <th>Total</th>
+                    <th>Rank</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -92,6 +103,8 @@ const JudgePage = () => {
                             className="input input-xs input-bordered w-full max-w-12 text-center" />
                         </th>
                       )}
+                      <th> {calculateComputedValue(contestant.scoresheet)} </th>
+                      <th> *** output here ***  </th>
                     </tr>
                   )}
                 </tbody>
