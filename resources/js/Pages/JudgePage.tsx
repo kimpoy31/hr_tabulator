@@ -12,16 +12,20 @@ const JudgePage = () => {
     const [contestants, setContestants] = useState<Contestant[]>([])
     const [hasEdited, setHadEdited] = useState<boolean>(false)
     const [scoringRange, setScoringRange] = useState<number>(0)
+    const [minScoringRange, setMinScoringRange] = useState<number>(0)
+    const [includesLessScoringRange, setIncludesLessScoringRange] = useState<boolean>(false)
 
     useEffect(() => {
         setActivity(props.activity)
         setCriterias(props.criterias)
         setContestants(props.contestants)
         setScoringRange(props.activity.scoringRange.range)
+        setMinScoringRange(props.activity.scoringRange.range - (25 / 100) * props.activity.scoringRange.range )
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
     const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
       newScore = Number.isNaN(newScore) ? 0 : newScore
+      setIncludesLessScoringRange(newScore < minScoringRange)
 
       setContestants(prevState => {
         const updatedContestantRecord = [...prevState];
@@ -70,7 +74,7 @@ const JudgePage = () => {
                     {criterias.map((criteria,index) => 
                       <th key={index} className='md:text-center text-end'>
                         <div className='uppercase'>{criteria.criteria + ' ' + criteria.percentage + '%'}</div>
-                        <div className='text-lg'>(1-{scoringRange})</div>
+                        <div className='text-lg'>({minScoringRange}-{scoringRange})</div>
                       </th>
                     )}
                   </tr>
@@ -95,8 +99,9 @@ const JudgePage = () => {
             </div>
         }
 
-        <div className="w-full flex justify-end gap-1 mt-4">
-          <button className="btn bg-indigo-500 text-white" onClick={() => handleSave()} disabled={!hasEdited} >Save</button>
+        <div className="w-full flex justify-end gap-5 mt-4 items-center">
+          {includesLessScoringRange && <p className='uppercase text-red-500'>saving disabled. Scores must be greater or equal to {minScoringRange}</p>}
+          <button className="btn bg-indigo-500 text-white" onClick={() => handleSave()} disabled={!hasEdited || includesLessScoringRange} >Save</button>
         </div>
     </div>
   )

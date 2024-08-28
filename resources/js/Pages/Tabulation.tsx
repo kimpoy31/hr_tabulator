@@ -100,7 +100,7 @@ const Tabulation = () => {
                     <th key={index}>{total.totalScore}</th>
                     )}
                     <th className='text-indigo-800'>{(Math.round(contestant.overallTotalAverage * 1000) / 1000)}</th>
-                    <th className='text-indigo-800'>{getRanking((Math.round(contestant.overallTotalAverage * 1000) / 1000) , overallComputedScores)}</th>
+                    <th className='text-violet-600'>{getRanking((Math.round(contestant.overallTotalAverage * 1000) / 1000) , overallComputedScores)}</th>
                 </tr>
                 )}
             </tbody>
