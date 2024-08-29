@@ -39,23 +39,17 @@ const Tabulation = () => {
     };
 
     // function that determines the ranking order
-    function getRanking(score: number, scores: number[]): string | number {
+    function getRanking(score: number, scores: number[]) {
       // Sort the scores array in descending order
       const sortedScores = [...scores].sort((a, b) => b - a);
     
       // Find the index of the score in the sorted array
       const index = sortedScores.findIndex(s => s === score);
-    
-      // Check if the score is found in the sorted array
-      if (index === -1) {
-        return "Score not found";
-      }
-    
+     
       // Check if there are other scores in the same rank
       const rank = sortedScores.indexOf(score) + 1; // Rank starts from 1
-      const isTie = sortedScores.lastIndexOf(score) !== index;
     
-      return isTie ? "tie" : rank;
+      return rank;
     }
 
     useEffect(() => {
@@ -75,11 +69,13 @@ const Tabulation = () => {
     // ****************************************************
     const [isPointBased, setIsPointBased] = useState<boolean>(true)
     const [groupedScores, setGroupedScores] = useState<number[][]>([]);
+    const [groupedScoresByRank, setGroupedScoresByRank] = useState<(number)[][]>([]);
+    const [summedScores, setSummedScores] = useState<(number)[]>([]);
 
     const processContestants = (contestants: Contestant[]) => {
       // Create a 2D array to hold grouped scores
       const scoresByIndex: number[][] = [];
-      const scoresByIndexByRank: number[][] = [];
+      const scoresByIndexByRank: (number)[][] = [];
   
       // Iterate through each contestant
       contestants.forEach(contestant => {
@@ -93,28 +89,40 @@ const Tabulation = () => {
         });
       });
   
-      // Update the state with the grouped scores
+      // Calculate rankings and populate the ranks array
+      scoresByIndex.forEach((scores, index) => {
+        // Get the rankings for each score
+        const rankedScores: (number)[] = scores.map(score => getRanking(score, scores));
+        scoresByIndexByRank[index] = rankedScores;
+      });
+  
+      // Update the state with the grouped scores and ranked scores
       setGroupedScores(scoresByIndex);
+      setGroupedScoresByRank(scoresByIndexByRank);
     };
 
-    // const calculateSums = (scoresByIndex: number[][]) => {
-    //   const sums: number[] = [];
+    const calculateSums = (scoresByIndex: number[][]) => {
+      const sums: number[] = [];
   
-    //   // Determine the maximum length of sub-arrays to handle uneven lengths
-    //   const maxLength = Math.max(...scoresByIndex.map(arr => arr.length));
+      // Determine the maximum length of sub-arrays to handle uneven lengths
+      const maxLength = Math.max(...scoresByIndex.map(arr => arr.length));
   
-    //   for (let i = 0; i < maxLength; i++) {
-    //     let sum = 0;
-    //     for (let j = 0; j < scoresByIndex.length; j++) {
-    //       if (scoresByIndex[j][i] !== undefined) {
-    //         sum += scoresByIndex[j][i];
-    //       }
-    //     }
-    //     sums.push(sum);
-    //   }
+      for (let i = 0; i < maxLength; i++) {
+        let sum = 0;
+        for (let j = 0; j < scoresByIndex.length; j++) {
+          if (scoresByIndex[j][i] !== undefined) {
+            sum += scoresByIndex[j][i];
+          }
+        }
+        sums.push(sum);
+      }
   
-    //   setSummedScores(sums);
-    // };
+      setSummedScores(sums);
+    };
+
+    useEffect(() => {
+      calculateSums(groupedScoresByRank)
+    },[groupedScoresByRank])
 
   return (
     <div className='lg:px-32 px-4 pt-8'>
@@ -160,14 +168,14 @@ const Tabulation = () => {
                     <th key={index}>
                       {isPointBased 
                         ?   total.totalScore 
-                        :   getRanking(total.totalScore, groupedScores[index])
+                        :   getRanking(total.totalScore, groupedScores[index]) === 0 ? 'tie' : getRanking(total.totalScore, groupedScores[index])
                       }
                     </th>
                     )}
                     <th className='text-indigo-800'>{
                       isPointBased
                       ?   (Math.round(contestant.overallTotalAverage * 1000) / 1000)
-                      :    ''
+                      :    summedScores[index]
                       }</th>
                     <th className='text-violet-600'>{getRanking((Math.round(contestant.overallTotalAverage * 1000) / 1000) , overallComputedScores)}</th>
                 </tr>
