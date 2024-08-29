@@ -133,7 +133,7 @@ const JudgePage = () => {
                             className="input input-xs input-bordered w-full max-w-12 text-center" />
                         </th>
                       )}
-                      <th> {calculateComputedValue(contestant.scoresheet)} </th>
+                      <th> {calculateComputedValue(contestant.scoresheet)} </th> 
                       <th> {hasEdited ? '---' : getRanking(calculateComputedValue(contestant.scoresheet), scoreArray) }  </th>
                     </tr>
                   )}

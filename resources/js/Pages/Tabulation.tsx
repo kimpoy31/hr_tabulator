@@ -12,13 +12,15 @@ const Tabulation = () => {
     const [judge, setJudge] = useState<UserInformation>()
     const [activity, setActivity] = useState<Activity>()
     const [overallComputedScores, setOverallComputedScores] = useState<number[]>([])
+    const [currentJudgeTotalScores, setCurrentJudgeTotalScores] = useState<number[]>([])
     
     const filteredContestants = filterScoresheets(contestants)
 
     function filterScoresheets(contestants:Contestant[]) {
         return contestants.map(contestant => ({
           ...contestant,
-          submittedScoresheet: contestant.submittedScoresheet.filter(scoreSheet => scoreSheet.judge_id === judge?.id)
+          submittedScoresheet: contestant.submittedScoresheet.filter(scoreSheet => scoreSheet.judge_id === judge?.id),
+          totalAverage: contestant.totalAverage.filter(average => average.judge_id === judge?.id),
         }));
     }
 
@@ -39,7 +41,7 @@ const Tabulation = () => {
     };
 
     // function that determines the ranking order
-    function getRanking(score: number, scores: number[]) {
+    function getRanking(score: number, scores: number[], unfiltered?:boolean) {
       // Sort the scores array in descending order
       const sortedScores = [...scores].sort((a, b) => b - a);
     
@@ -120,12 +122,25 @@ const Tabulation = () => {
       setSummedScores(sums);
     };
 
+    const getCurrentJudgeTotalScores = () => {
+      const tempArray:number[] = []
+
+      filteredContestants.map(contestant => {
+        contestant.totalAverage.map(average => {
+          tempArray.push(average.totalScore)
+        })
+      })
+
+      setCurrentJudgeTotalScores(tempArray)
+    }
+
     useEffect(() => {
       calculateSums(groupedScoresByRank)
+      getCurrentJudgeTotalScores()
     },[groupedScoresByRank])
 
   return (
-    <div className='lg:px-32 px-4 pt-8'>
+    <div className='lg:px-8 px-4 pt-8'>
         <div className='mb-4'>
           <div className='text-3xl uppercase font-extrabold'>{  activity?.activity }</div>
           <div className='text-lg text-gray-500 uppercase font-extrabold'>{  activity?.description }</div>
@@ -206,6 +221,7 @@ const Tabulation = () => {
                         <div className='uppercase'>Total</div>
                         <div>(1-{activity?.scoringRange.range})</div>
                     </th>
+                    <th>Rank</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -218,6 +234,7 @@ const Tabulation = () => {
                         </th>
                       )}
                       <th className='text-xs text-indigo-700'>{calculateTotalComputedScore(contestant)}</th>
+                      <th className='text-xs text-indigo-700'>{getRanking(calculateTotalComputedScore(contestant),currentJudgeTotalScores,true)}</th>
                     </tr>
                   )}
                 </tbody>
