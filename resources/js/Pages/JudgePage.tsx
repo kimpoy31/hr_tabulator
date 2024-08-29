@@ -14,6 +14,8 @@ const JudgePage = () => {
     const [scoringRange, setScoringRange] = useState<number>(0)
     const [minScoringRange, setMinScoringRange] = useState<number>(0)
     const [includesLessScoringRange, setIncludesLessScoringRange] = useState<boolean>(false)
+    // below is the array container of all computed scores (used to determine ranks)
+    const [scoreArray, setScoreArray] = useState<number[]>([]);
 
     useEffect(() => {
         setActivity(props.activity)
@@ -35,9 +37,11 @@ const JudgePage = () => {
       })
 
       setHadEdited(true);
-    }
+    } 
 
     const handleSave = async() => {
+      await setScoreArray([]);
+
       try {
         const response = await axios.post(route('score.update'), { contestants })
         if(response.status === 200){
@@ -47,6 +51,13 @@ const JudgePage = () => {
         console.log(error)
       }
 
+      const toAppend = contestants.map((contestant) => {
+        return calculateComputedValue(contestant.scoresheet)
+      })
+
+      setScoreArray(toAppend);
+
+      console.log('scores' ,scoreArray)
     }
 
     function calculateComputedValue(scoresheet:Score[]) {
@@ -56,6 +67,25 @@ const JudgePage = () => {
         return total + (score / scoringRange) * (percentage / scoringRange) * scoringRange;
       }, 0);
     }
+
+    function getRanking(score: number, scores: number[]): string | number {
+      // Sort the scores array in descending order
+      const sortedScores = [...scores].sort((a, b) => b - a);
+    
+      // Find the index of the score in the sorted array
+      const index = sortedScores.findIndex(s => s === score);
+    
+      // Check if the score is found in the sorted array
+      if (index === -1) {
+        return "Score not found";
+      }
+    
+      // Check if there are other scores in the same rank
+      const rank = sortedScores.indexOf(score) + 1; // Rank starts from 1
+      const isTie = sortedScores.lastIndexOf(score) !== index;
+    
+      return isTie ? "tie" : rank;
+    }    
 
   return (
     <div className='lg:px-32 px-4 py-4'>
@@ -104,7 +134,7 @@ const JudgePage = () => {
                         </th>
                       )}
                       <th> {calculateComputedValue(contestant.scoresheet)} </th>
-                      <th> *** output here ***  </th>
+                      <th> {hasEdited ? '---' : getRanking(calculateComputedValue(contestant.scoresheet), scoreArray) }  </th>
                     </tr>
                   )}
                 </tbody>
