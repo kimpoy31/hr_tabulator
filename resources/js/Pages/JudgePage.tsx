@@ -26,16 +26,34 @@ const JudgePage = () => {
         setMinScoringRange(props.activity.scoringRange.range - (25 / 100) * props.activity.scoringRange.range )
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
+    const checkInputValues = () => {
+      for (const contestant of contestants) {
+        for (const score of contestant.scoresheet) {
+          if (score.score < minScoringRange) {
+            setIncludesLessScoringRange(true)
+            break; // Breaks the inner loop
+          }
+        }
+    
+        if (includesLessScoringRange) {
+          break; // Breaks the outer loop
+        }
+      }
+    }
+
     const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
       newScore = Number.isNaN(newScore) ? 0 : newScore
       setIncludesLessScoringRange(newScore < minScoringRange)
 
+
       setContestants(prevState => {
         const updatedContestantRecord = [...prevState];
         updatedContestantRecord[arrayIndex].scoresheet[sheetIndex].score = newScore > scoringRange ? scoringRange : newScore
+
+        checkInputValues()
         return updatedContestantRecord;
       })
-
+ 
       setHadEdited(true);
     } 
 
@@ -132,10 +150,12 @@ const JudgePage = () => {
                       {contestant.scoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='md:text-center text-end'>
                           <input 
-                            type="text" 
+                            type="number" 
+                            min={minScoringRange}
+                            // max={scor}
                             value={sheet.score !== 0 ? sheet.score : ''} 
                             onChange={(e) => inputOnChange(index, sheetIndex ,Number(e.target.value))}
-                            className="input input-xs input-bordered w-full max-w-12 text-center" />
+                            className={`input input-xs input-bordered w-full max-w-12 text-center ${sheet.score < minScoringRange && 'bg-red-200'}`} />
                         </th>
                       )}
                       <th> {calculateComputedValue(contestant.scoresheet)} </th> 
