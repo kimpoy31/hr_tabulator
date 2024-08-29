@@ -150,7 +150,7 @@ const JudgePage = () => {
                       {contestant.scoresheet.map((sheet,sheetIndex) => 
                         <th key={sheetIndex} className='md:text-center text-end'>
                           <input 
-                            type="number" 
+                            type="text" 
                             min={minScoringRange}
                             // max={scor}
                             value={sheet.score !== 0 ? sheet.score : ''} 
