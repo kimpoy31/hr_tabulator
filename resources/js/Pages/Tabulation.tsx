@@ -69,7 +69,7 @@ const Tabulation = () => {
     // ****************************************************
     // BELOW ARE FUNCTIONS AND VARIABLES FOR RANK BASED   *
     // ****************************************************
-    const [isPointBased, setIsPointBased] = useState<boolean>(true)
+    const [isPointBased, setIsPointBased] = useState<boolean>(false)
     const [groupedScores, setGroupedScores] = useState<number[][]>([]);
     const [groupedScoresByRank, setGroupedScoresByRank] = useState<(number)[][]>([]);
     const [summedScores, setSummedScores] = useState<(number)[]>([]);
@@ -140,10 +140,24 @@ const Tabulation = () => {
     },[groupedScoresByRank])
 
   return (
-    <div className='lg:px-8 px-4 pt-8'>
-        <div className='mb-4'>
-          <div className='text-3xl uppercase font-extrabold'>{  activity?.activity }</div>
-          <div className='text-lg text-gray-500 uppercase font-extrabold'>{  activity?.description }</div>
+    <div 
+      className='lg:px-8 px-4 pt-8  h-screen'
+      style={{
+        backgroundImage: 'url("/images/pcsaBG.png")',
+        backgroundSize: 'cover', // or 'contain', depending on your needs
+        backgroundPosition: 'center', // adjusts the image position
+        backgroundRepeat: 'no-repeat', // prevents the image from repeating
+      }}
+    >
+        <div className='mb-4 flex items-start justify-between'>
+          <div>
+            <div className='text-3xl uppercase font-extrabold'>{  activity?.activity }</div>
+            <div className='text-lg text-gray-500 uppercase font-extrabold'>{  activity?.description }</div>
+          </div>
+          <div className='flex gap-4'>
+            <img src="/images/cscLogo.png" alt="cscLogo" className='max-h-14' />
+            <img src="/images/themeLogo.png" alt="themeLogo" className='max-h-14' />
+          </div>
         </div>
 
         <div className="overflow-x-auto">
@@ -207,7 +221,7 @@ const Tabulation = () => {
             </div>
         :   <div className="overflow-x-auto mt-8">
                 <h3 className="font-bold text-lg uppercase mb-2">{judge?.fullname}</h3>
-              <table className="table table-sm">
+              <table className="table table-sm border-collapse">
                 <thead>
                   <tr className="border">
                     <th>Contestant</th>
@@ -242,7 +256,7 @@ const Tabulation = () => {
             </div>
         }
 
-        <div className="flex flex-col text-center items-center max-w-56 my-20">
+        <div className="flex flex-col text-center items-center max-w-56 my-16">
             <hr className="w-full border-t border-gray-900 " />
             <p className='uppercase text-xs'>Judge signature</p>
         </div>
