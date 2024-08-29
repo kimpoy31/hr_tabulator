@@ -56,7 +56,7 @@ const Tabulation = () => {
       const isTie = sortedScores.lastIndexOf(score) !== index;
     
       return isTie ? "tie" : rank;
-    }    
+    }
 
     useEffect(() => {
         setContestants(props.contestants)
@@ -64,11 +64,57 @@ const Tabulation = () => {
         setCriterias(props.criterias)
         setJudge(props.judge)
         setActivity(props.activity)
+        processContestants(props.contestants)
     },[])
 
-    useEffect(() => {
-      console.log(overallComputedScores)
-    },[contestants])
+    // ***
+    // *
+    // *
+    // ****************************************************
+    // BELOW ARE FUNCTIONS AND VARIABLES FOR RANK BASED   *
+    // ****************************************************
+    const [isPointBased, setIsPointBased] = useState<boolean>(true)
+    const [groupedScores, setGroupedScores] = useState<number[][]>([]);
+
+    const processContestants = (contestants: Contestant[]) => {
+      // Create a 2D array to hold grouped scores
+      const scoresByIndex: number[][] = [];
+      const scoresByIndexByRank: number[][] = [];
+  
+      // Iterate through each contestant
+      contestants.forEach(contestant => {
+        contestant.totalAverage.forEach((avg, index) => {
+          // Ensure there is a sub-array for each index
+          if (!scoresByIndex[index]) {
+            scoresByIndex[index] = [];
+          }
+          // Push the totalScore into the appropriate sub-array
+          scoresByIndex[index].push(avg.totalScore);
+        });
+      });
+  
+      // Update the state with the grouped scores
+      setGroupedScores(scoresByIndex);
+    };
+
+    // const calculateSums = (scoresByIndex: number[][]) => {
+    //   const sums: number[] = [];
+  
+    //   // Determine the maximum length of sub-arrays to handle uneven lengths
+    //   const maxLength = Math.max(...scoresByIndex.map(arr => arr.length));
+  
+    //   for (let i = 0; i < maxLength; i++) {
+    //     let sum = 0;
+    //     for (let j = 0; j < scoresByIndex.length; j++) {
+    //       if (scoresByIndex[j][i] !== undefined) {
+    //         sum += scoresByIndex[j][i];
+    //       }
+    //     }
+    //     sums.push(sum);
+    //   }
+  
+    //   setSummedScores(sums);
+    // };
 
   return (
     <div className='lg:px-32 px-4 pt-8'>
@@ -78,7 +124,21 @@ const Tabulation = () => {
         </div>
 
         <div className="overflow-x-auto">
+   
             <h3 className="font-bold text-lg uppercase mb-2">Tabulation sheet</h3>
+            
+            <div className='max-w-36'>
+              <label className="label cursor-pointer">
+                  <span className="label-text uppercase">{isPointBased ? 'point' : 'rank' } based</span>
+                  <input 
+                    type="checkbox" 
+                    className="toggle toggle-sm toggle-primary" 
+                    checked={isPointBased} 
+                    onChange={(e) => setIsPointBased(e.target.checked)} 
+                  />
+              </label>
+            </div>
+            
             <table className="table">
             <thead>
                 <tr className="border">
@@ -97,9 +157,18 @@ const Tabulation = () => {
                 <tr className="border" key={index}>
                     <th className='uppercase text-sm'>{contestant.contestant}</th>
                     {contestant.totalAverage.map((total,index) => 
-                    <th key={index}>{total.totalScore}</th>
+                    <th key={index}>
+                      {isPointBased 
+                        ?   total.totalScore 
+                        :   getRanking(total.totalScore, groupedScores[index])
+                      }
+                    </th>
                     )}
-                    <th className='text-indigo-800'>{(Math.round(contestant.overallTotalAverage * 1000) / 1000)}</th>
+                    <th className='text-indigo-800'>{
+                      isPointBased
+                      ?   (Math.round(contestant.overallTotalAverage * 1000) / 1000)
+                      :    ''
+                      }</th>
                     <th className='text-violet-600'>{getRanking((Math.round(contestant.overallTotalAverage * 1000) / 1000) , overallComputedScores)}</th>
                 </tr>
                 )}
