@@ -176,7 +176,7 @@ const Tabulation = () => {
               </label>
             </div>
             
-            <table className="table">
+            <table className="table table-sm">
             <thead>
                 <tr className="border">
                 <th>Contestant</th>
@@ -212,8 +212,6 @@ const Tabulation = () => {
             </tbody>
             </table>
         </div>
-
-
 
         {contestants.length === 0 || criterias.length === 0
         ?   <div className='w-full text-center p-8 bg-slate-100 mt-4 shadow-md uppercase font-bold'>
@@ -257,8 +255,8 @@ const Tabulation = () => {
         }
 
         <div className="flex flex-col text-center items-center max-w-56 my-16">
-            <hr className="w-full border-t border-gray-900 " />
-            <p className='uppercase text-xs'>Judge signature</p>
+            <hr className="w-full border-t-2 border-gray-900 " />
+            <p className='uppercase text-xs font-bold'>Judge signature</p>
         </div>
 
     </div>

@@ -1,3 +1,4 @@
+import DefaultLayout from '@/Layouts/DefaultLayout'
 import { Activity, Contestant, Criteria, PageProps, Score } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
 import axios from 'axios'
@@ -23,7 +24,6 @@ const JudgePage = () => {
         setContestants(props.contestants)
         setScoringRange(props.activity.scoringRange.range)
         setMinScoringRange(props.activity.scoringRange.range - (25 / 100) * props.activity.scoringRange.range )
-        console.log(contestants)
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
     const inputOnChange = (arrayIndex:number, sheetIndex:number, newScore:number) => {
@@ -56,8 +56,6 @@ const JudgePage = () => {
       })
 
       setScoreArray(toAppend);
-
-      console.log('scores' ,scoreArray)
     }
 
     function calculateComputedValue(scoresheet:Score[]) {
@@ -87,8 +85,16 @@ const JudgePage = () => {
       return isTie ? "tie" : rank;
     }    
 
+    useEffect(() => {
+      const toAppend = contestants.map((contestant) => {
+        return calculateComputedValue(contestant.scoresheet)
+      })
+
+      setScoreArray(toAppend);
+    },[contestants])
+
   return (
-    <div className='lg:px-32 px-4 py-4'>
+    <DefaultLayout className='lg:px-32 px-4 py-16'>
         <div className="flex justify-between">
         <div>
           <div className='text-3xl uppercase font-extrabold'>{  props.auth.user.userInformation.fullname }</div>
@@ -97,7 +103,6 @@ const JudgePage = () => {
             <div className='uppercase'>{activity?.activity} </div>
           </div>
         </div>
-        <Link href={route('logout')} className='btn lg:btn-sm btn-xs btn-outline btn-error'><MdLogout size={18}/> Logout</Link>
       </div>
 
 
@@ -146,7 +151,7 @@ const JudgePage = () => {
           {includesLessScoringRange && <p className='uppercase text-red-500'>saving disabled. Scores must be greater or equal to {minScoringRange}</p>}
           <button className="btn bg-indigo-500 text-white" onClick={() => handleSave()} disabled={!hasEdited || includesLessScoringRange} >Save</button>
         </div>
-    </div>
+    </DefaultLayout>
   )
 }
 
