@@ -7,12 +7,12 @@ interface DefaultLayoutProps extends PropsWithChildren<{}> {
 
 const DefaultLayout = ({ children, className }: DefaultLayoutProps) => {
   return (
-    <div>
-        <header className='absolute w-full'>
+    <div className='flex flex-col'>
+        <header>
           <Navbar />
         </header>
         <main 
-          className={`${className} h-screen pt-28 `}
+          className={`${className} h-[550px] pt-16 `}
           style={{
             backgroundImage: 'url("/images/pcsaBG.png")',
             backgroundSize: 'cover', // 'cover' or 'contain', depending on your needs
@@ -22,7 +22,7 @@ const DefaultLayout = ({ children, className }: DefaultLayoutProps) => {
         >
           { children }
         </main>
-        <footer className="bg-base-200 w-full absolute bottom-0 lg:px-32 px-4 py-10 border-t-8">
+        <footer className="bg-base-200 w-full bottom-0 lg:px-32 px-4 py-10 border-t-8">
           <div className="flex gap-4">
             <img src="/images/cscLogo.png" alt="cscLogo" className='lg:max-h-20 max-h-12' />
             <img src="/images/themeLogo.png" alt="cscLogo" className='lg:max-h-20 max-h-12' />

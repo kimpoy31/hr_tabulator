@@ -1,3 +1,4 @@
+import DefaultLayout from '@/Layouts/DefaultLayout';
 import NewActivityModal from '@/Modals/NewActivityModal'
 import { Activity, PageProps } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -18,13 +19,12 @@ const AdminPage = () => {
     },[])
 
   return (
-    <div className='w-full h-screen flex justify-center'>
+    <DefaultLayout className='w-full h-screen flex justify-center'>
 
-       <div className="max-w-screen-md w-full flex flex-col py-4 gap-2">
+       <div className="max-w-screen-md w-full flex flex-col gap-2">
 
             <div className='flex justify-between'>
                 <NewActivityModal activities={activities} setActivities={setActivities} />
-                <Link href={route('logout')} className='btn btn-sm btn-outline btn-error'><MdLogout size={18} /> Logout</Link>
             </div>
 
             <div className='p-2 border'>
@@ -55,7 +55,7 @@ const AdminPage = () => {
             </div>
 
        </div>
-    </div>
+    </DefaultLayout>
   )
 }
 
