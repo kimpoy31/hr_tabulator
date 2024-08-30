@@ -151,11 +151,9 @@ const JudgePage = () => {
                         <th key={sheetIndex} className='md:text-center text-end'>
                           <input 
                             type="text" 
-                            min={minScoringRange}
-                            // max={scor}
                             value={sheet.score !== 0 ? sheet.score : ''} 
                             onChange={(e) => inputOnChange(index, sheetIndex ,Number(e.target.value))}
-                            className={`input input-xs input-bordered w-full max-w-12 text-center ${sheet.score < minScoringRange && 'bg-red-200'}`} />
+                            className={`input input-xs input-bordered w-full max-w-12 text-center ${sheet.score < minScoringRange ? 'bg-red-200' : 'bg-base-300' }`} />
                         </th>
                       )}
                       <th> {calculateComputedValue(contestant.scoresheet)} </th> 
