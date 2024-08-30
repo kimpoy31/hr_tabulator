@@ -29,7 +29,7 @@ const JudgePage = () => {
     const checkInputValues = () => {
       for (const contestant of contestants) {
         for (const score of contestant.scoresheet) {
-          if (score.score < minScoringRange) {
+          if (score.score < minScoringRange && score.score !== 0) {
             setIncludesLessScoringRange(true)
             break; // Breaks the inner loop
           }
