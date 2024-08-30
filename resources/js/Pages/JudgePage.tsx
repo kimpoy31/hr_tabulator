@@ -23,7 +23,7 @@ const JudgePage = () => {
         setCriterias(props.criterias)
         setContestants(props.contestants)
         setScoringRange(props.activity.scoringRange.range)
-        setMinScoringRange(props.activity.scoringRange.range - (25 / 100) * props.activity.scoringRange.range )
+        setMinScoringRange(Math.floor(props.activity.scoringRange.range - (25 / 100) * props.activity.scoringRange.range))
     }, [props.activity, props.criterias, props.contestants, props.scoresheet])
 
     const checkInputValues = () => {

@@ -2,7 +2,6 @@ import NewContestantModal from "@/Modals/NewContestantModal";
 import NewCriteriaModal from "@/Modals/NewCriteriaModal";
 import NewJudgeModal from "@/Modals/NewJudgeModal";
 import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
-import { FaMinus } from "react-icons/fa6";
 import { Link, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -44,7 +43,15 @@ const Activity = () => {
 
   return (
    
-    <div className="w-full md:h-screen bg-base-200 md:px-16 px-4 py-8 overflow-y-scroll">
+    <div 
+        className="w-full md:h-screen bg-base-200 md:px-16 px-4 py-8 overflow-y-scroll"
+        style={{
+            backgroundImage: 'url("/images/pcsaBG.png")',
+            backgroundSize: 'cover', // 'cover' or 'contain', depending on your needs
+            backgroundPosition: 'center', // adjusts the image position
+            backgroundRepeat: 'no-repeat', // prevents the image from repeating
+        }}
+    >
         <Link href={route('admin.show')} className='btn btn-sm btn-outline'><FaArrowLeftLong />Admin Dashboard</Link>
         <div className="flex flex-col gap-0 mb-3">
             <h1 className='text-3xl uppercase font-extrabold pt-4'>{activityInfo.activity}</h1>
@@ -77,7 +84,7 @@ const Activity = () => {
                         <NewJudgeModal judges={judges} setJudges={setJudges} />
                     </div>
 
-                    <div className="overflow-x-auto max-h-72">
+                    <div className="overflow-x-auto max-h-36">
                         <table className="table">
                             {/* head */}
                             <thead>
@@ -109,7 +116,7 @@ const Activity = () => {
                         <NewContestantModal contestants={contestants} setContestants={setContestants} />
                     </div>
 
-                    <div className="overflow-x-auto max-h-72">
+                    <div className="overflow-x-auto max-h-36">
                         <table className="table">
                             <thead>
                                 <tr>
@@ -150,7 +157,7 @@ const Activity = () => {
                 <NewCriteriaModal criterias={criterias} setCriterias={setCriterias} TotalPercentage={TotalPercentage} />
             </div>
 
-            <div className="overflow-x-auto max-h-72">
+            <div className="overflow-x-auto max-h-40">
                 <table className="table">
                     {/* head */}
                     <thead>
