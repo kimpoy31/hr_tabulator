@@ -155,8 +155,8 @@ const Tabulation = () => {
             <div className='text-lg text-gray-500 uppercase font-extrabold'>{  activity?.description }</div>
           </div>
           <div className='flex gap-4'>
-            <img src="/images/cscLogo.png" alt="cscLogo" className='max-h-14' />
-            <img src="/images/themeLogo.png" alt="themeLogo" className='max-h-14' />
+            <img src="/images/cscLogo.jpg" alt="cscLogo" className='max-h-14' />
+            <img src="/images/themeLogo.jpg" alt="themeLogo" className='max-h-14' />
           </div>
         </div>
 
