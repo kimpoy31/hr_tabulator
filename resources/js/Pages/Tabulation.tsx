@@ -61,6 +61,8 @@ const Tabulation = () => {
         setJudge(props.judge)
         setActivity(props.activity)
         processContestants(props.contestants)
+
+        console.log(props)
     },[])
 
     // ***
@@ -176,7 +178,7 @@ const Tabulation = () => {
               </label>
             </div>
             
-            <table className="table table-sm">
+          <table className="table table-sm">
             <thead>
                 <tr className="border">
                 <th>Contestant</th>
@@ -210,14 +212,14 @@ const Tabulation = () => {
                 </tr>
                 )}
             </tbody>
-            </table>
+          </table>
         </div>
 
         {contestants.length === 0 || criterias.length === 0
         ?   <div className='w-full text-center p-8 bg-slate-100 mt-4 shadow-md uppercase font-bold'>
                 Please contact administrator
             </div>
-        :   <div className="overflow-x-auto mt-8">
+        :   <div className="overflow-x-auto my-8">
                 <h3 className="font-bold text-lg uppercase mb-2">{judge?.fullname}</h3>
               <table className="table table-sm border-collapse">
                 <thead>
@@ -253,6 +255,60 @@ const Tabulation = () => {
               </table>
             </div>
         }
+
+        {
+          criterias.map((criteria, index) => 
+            <div key={index}>
+              <h3 className="font-bold text-lg uppercase mb-2">{criteria.criteria}</h3>
+              <table className="table table-sm border-collapse">
+                <thead>
+                  <tr className="border">
+                    <th>Contestant</th>
+                    {judges.map((info,index)=>
+                      <th key={index}>Judge {index + 1}</th>
+                    )}
+                     <th>Total</th>
+                    <th>Rank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {contestants.map((contestant, contestantIndex) => {
+                    // Initialize an array to store scores for each judge
+                    const scoresForJudges: number[] = [];
+
+                    // Filter the scoresheet for the current criteria
+                    const scoresForCriteria = contestant.submittedScoresheet.filter(score => score.criteria_id === criteria.id);
+
+                    // Calculate the total score for this criteria (assuming only one score per criteria)
+                    const totalScore = scoresForCriteria.reduce((acc, score) => acc + score.score, 0);
+
+                    // Populate the scoresForJudges array
+                    judges.forEach((judge, judgeIndex) => {
+                      // Find the score for the current judge
+                      const score = scoresForCriteria.find(score => score.judge_id === judge.id);
+                      scoresForJudges.push(score ? score.score : 0); // Use 0 if no score found
+                    });
+
+                    // console.log('scores' + contestantIndex ,scoresForJudges)
+                  
+
+                    return (
+                      <tr key={contestantIndex}>
+                        <th>{contestant.contestant}</th>
+                        {scoresForJudges.map((score, judgeIndex) => (
+                          <td key={judgeIndex}>{score}</td>
+                        ))}
+                        <td>{(Math.round(totalScore / judges.length * 1000) / 1000)}</td>
+                        <td>{getRanking((Math.round(totalScore / judges.length * 1000) / 1000), scoresForJudges)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table> 
+            </div>
+          )
+        }
+
 
         <div className="flex flex-col text-center items-center max-w-56 my-16">
             <hr className="w-full border-t-2 border-gray-900 " />
