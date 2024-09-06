@@ -16,5 +16,6 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/activity/{id}', [ActivityController::class, 'show'])->name('activity.show');
     //  Tabulation data    
    Route::get('/activity/{activity_id}/judge/{judge_id}', [ActivityController::class, 'judgeTabulation'])->name('activity.judge.tabulation');
+   Route::get('/activity/{activity_id}/winners-per-criteria', [ActivityController::class, 'winnersPerCriteria'])->name('activity.winnersPerCriteria');
 
 });

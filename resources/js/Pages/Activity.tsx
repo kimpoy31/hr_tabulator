@@ -153,7 +153,10 @@ const Activity = () => {
         {/* Criteria Container */}
         <div className='w-full max-h-96 border p-4 shadow h-fit mt-6'>
             <div className="flex justify-between items-center mb-2">
-                <h1 className='text-lg font-bold'>Criteria of Judging</h1>
+                <div className="flex items-center gap-4">
+                    <h1 className='text-lg font-bold'>Criteria of Judging</h1>
+                    <a href={route("activity.winnersPerCriteria" , {activity_id: props.activity.id} )} className="btn btn-outline btn-primary btn-xs" target="_blank">Winners per Criteria</a>
+                </div>
                 <NewCriteriaModal criterias={criterias} setCriterias={setCriterias} TotalPercentage={TotalPercentage} />
             </div>
 

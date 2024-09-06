@@ -98,4 +98,31 @@ class ActivityController
         return response()->json(['updatedRange' => $validatedData['range']], 200);
     }
 
+    function winnersPerCriteria ($activity_id){
+        $user = Auth::user();
+        $role = $user->userInformation->role;
+
+        if($role !== 'admin'){
+            return to_route('judge.show');
+        }
+ 
+        // $activity = ActivityModel::find($activity_id);
+        // $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
+        // $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
+        // $judge = UsersInformation::find($judge_id);
+        // $scores = Score::where('activity_id', $activity_id)->where('judge_id', $judge_id)->where('status','active')->get();
+        // $judges = UsersInformation::where('activity_id', $activity_id)->where('status','active')->get();
+
+        return Inertia::render('TabulationPerCriteria');
+
+        // return Inertia::render('Tabulation', [
+        //     'activity' => $activity,
+        //     'contestants' => $contestants,
+        //     'criterias' => $criterias,
+        //     'judge' => $judge,
+        //     'scores' => $scores,
+        //     'judges' => $judges,
+        // ]);
+    }
+
 }
