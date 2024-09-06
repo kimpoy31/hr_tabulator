@@ -60,7 +60,7 @@ const TabulationPerCriteria = () => {
         >
             {
                 criterias.map((criteria, criteriaIndex) => (
-                    <div key={criteriaIndex}>
+                    <div key={criteriaIndex} className="mb-4">
                         <div className="flex items-center gap-4">
                             <h3 className="font-bold text-lg uppercase mb-2">{criteria.criteria}</h3>
                             <h3 className="font-bold text-xs uppercase mb-2 text-white bg-black px-2 rounded">{activity?.activity}</h3>
@@ -104,7 +104,7 @@ const TabulationPerCriteria = () => {
                                     });
 
                                     return (
-                                        <tr key={contestantIndex}>
+                                        <tr className="border" key={contestantIndex}>
                                             <th>{contestant.contestant}</th>
                                             {scoresForJudges.map((score, judgeIndex) => (
                                                 <td key={judgeIndex}>{score}</td>
