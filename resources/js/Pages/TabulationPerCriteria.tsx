@@ -1,4 +1,4 @@
-import { Contestant, Criteria, PageProps, UserInformation } from "@/types";
+import { Activity, Contestant, Criteria, PageProps, UserInformation } from "@/types";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
@@ -9,10 +9,12 @@ const TabulationPerCriteria = () => {
     const [judges, setJudges] = useState<UserInformation[]>([]);
     const [contestants, setContestants] = useState<Contestant[]>([]);
     const [totalScoresMap, setTotalScoresMap] = useState<Map<number, number>>(new Map());
+    const [activity, setActivity] = useState<Activity>();
 
     useEffect(() => {
         setCriterias(props.criterias);
         setJudges(props.judges);
+        setActivity(props.activity)
         setContestants(props.contestants);
     }, [props]);
 
@@ -59,7 +61,10 @@ const TabulationPerCriteria = () => {
             {
                 criterias.map((criteria, criteriaIndex) => (
                     <div key={criteriaIndex}>
-                        <h3 className="font-bold text-lg uppercase mb-2">{criteria.criteria}</h3>
+                        <div className="flex items-center gap-4">
+                            <h3 className="font-bold text-lg uppercase mb-2">{criteria.criteria}</h3>
+                            <h3 className="font-bold text-xs uppercase mb-2 text-white bg-black px-2 rounded">{activity?.activity}</h3>
+                        </div>
                         <table className="table table-sm border-collapse">
                             <thead>
                                 <tr className="border">
