@@ -155,7 +155,7 @@ const Activity = () => {
             <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-4">
                     <h1 className='text-lg font-bold'>Criteria of Judging</h1>
-                    <a href={route("activity.winnersPerCriteria" , {activity_id: props.activity.id} )} className="btn btn-outline btn-primary btn-xs" target="_blank">Winners per Criteria</a>
+                    <Link href={route("activity.winnersPerCriteria" , {activity_id: props.activity.id} )} className="btn btn-outline btn-primary btn-xs" target="_blank">Winners per Criteria</Link>
                 </div>
                 <NewCriteriaModal criterias={criterias} setCriterias={setCriterias} TotalPercentage={TotalPercentage} />
             </div>
