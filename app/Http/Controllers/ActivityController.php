@@ -107,7 +107,10 @@ class ActivityController
         }
  
         $activity = ActivityModel::find($activity_id);
-        $contestants = Contestant::where('activity_id', $activity_id)->where('status','active')->get();
+        $contestants = Contestant::where('activity_id', $activity_id)
+        ->where('status', 'active')
+        ->orderBy('created_at', 'asc') // Use 'desc' for descending order
+        ->get();
         $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
         $judges = UsersInformation::where('activity_id', $activity_id)->where('status','active')->get();
         // $judge = UsersInformation::find($judge_id);
