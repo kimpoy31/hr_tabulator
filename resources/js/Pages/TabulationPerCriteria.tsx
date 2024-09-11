@@ -90,12 +90,12 @@ const TabulationPerCriteria = () => {
     return (
         <div
             className='lg:px-8 px-4 pt-8 h-screen'
-            style={{
-                backgroundImage: 'url("/images/pcsaBG.png")',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-            }}
+            // style={{
+            //     backgroundImage: 'url("/images/pcsaBG.png")',
+            //     backgroundSize: 'cover',
+            //     backgroundPosition: 'center',
+            //     backgroundRepeat: 'no-repeat',
+            // }}
         >
             <div className='max-w-36'>
                 <label className="label cursor-pointer">
