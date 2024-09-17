@@ -42,6 +42,7 @@ const Tabulation = () => {
 
     // function that determines the ranking order
     function getRanking(score: number, scores: number[], unfiltered?:boolean) {
+      console.log(score)
       // Sort the scores array in descending order
       const sortedScores = [...scores].sort((a, b) => b - a);
     
