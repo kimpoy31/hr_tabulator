@@ -18,4 +18,10 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/activity/{activity_id}/judge/{judge_id}', [ActivityController::class, 'judgeTabulation'])->name('activity.judge.tabulation');
    Route::get('/activity/{activity_id}/winners-per-criteria', [ActivityController::class, 'winnersPerCriteria'])->name('activity.winnersPerCriteria');
 
+    // THIS ROUTE IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    // THIS ROUTE IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    // THIS ROUTE IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    // THIS ROUTE IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+   Route::get('/activity/{activity_id}/final-result', [ActivityController::class, 'finalResult'])->name('activity.finalResult');
+
 });

@@ -126,4 +126,34 @@ class ActivityController
         ]);
     }
 
+
+    // THIS FUNCTION IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    // THIS FUNCTION IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    // THIS FUNCTION IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    // THIS FUNCTION IS SPECIFICALLY FOR THATS MY BOBORDS 2024     
+    function finalResult ($activity_id){
+        $user = Auth::user();
+        $role = $user->userInformation->role;
+
+        if($role !== 'admin'){
+            return to_route('judge.show');
+        }
+ 
+        $activity = ActivityModel::find($activity_id);
+        $contestants = Contestant::where('activity_id', $activity_id)
+        ->where('status', 'active')
+        ->orderBy('created_at', 'asc') // Use 'desc' for descending order
+        ->get();
+        $criterias = Criteria::where('activity_id', $activity_id)->where('status','active')->get();
+        $judges = UsersInformation::where('activity_id', $activity_id)->where('status','active')->get();
+        // $judge = UsersInformation::find($judge_id);
+        // $scores = Score::where('activity_id', $activity_id)->where('judge_id', $judge_id)->where('status','active')->get();
+       
+        return Inertia::render('FinalResult', [
+            'activity' => $activity,
+            'contestants' => $contestants,
+            'criterias' => $criterias,
+            'judges' => $judges,
+        ]);
+    }
 }
