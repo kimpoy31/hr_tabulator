@@ -21,13 +21,18 @@ const TabulationPerCriteria = () => {
     const [judges, setJudges] = useState<UserInformation[]>([]);
     const [contestants, setContestants] = useState<Contestant[]>([]);
     const [activity, setActivity] = useState<Activity>();
-    const [isPointBased, setIsPointBased] = useState<boolean>(false);
+
+    const scores = contestants.map((contestant) => {
+        return contestant.overallTotalAverage;
+    });
 
     useEffect(() => {
         setContestants(props.contestants);
         setCriterias(props.criterias);
         setJudges(props.judges);
         setActivity(props.activity);
+
+        console.log(props.contestants);
     }, [props]);
 
     const getRankedContestants = (criteriaId: number) => {
@@ -142,6 +147,67 @@ const TabulationPerCriteria = () => {
                     Darling of the crowd
                 </h3>
                 :<h3 className="font-bold uppercase text-sm text-red-700"></h3>
+            </div>
+
+            <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-200">
+                <h3 className="font-bold uppercase text-sm text-gray-700">
+                    Thats My Bobords 2024 Winner
+                </h3>
+                :
+                {contestants.map((contestant) => {
+                    let rank = getRanking(
+                        contestant.overallTotalAverage,
+                        scores
+                    );
+
+                    return (
+                        rank === 1 && (
+                            <h3 className="font-bold uppercase text-sm text-red-700 ">
+                                {contestant.contestant}
+                            </h3>
+                        )
+                    );
+                })}
+            </div>
+            <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-100">
+                <h3 className="font-bold uppercase text-sm text-gray-700">
+                    Thats My Bobords 2024 1st Runner-up
+                </h3>
+                :
+                {contestants.map((contestant) => {
+                    let rank = getRanking(
+                        contestant.overallTotalAverage,
+                        scores
+                    );
+
+                    return (
+                        rank === 2 && (
+                            <h3 className="font-bold uppercase text-sm text-red-700">
+                                {contestant.contestant}
+                            </h3>
+                        )
+                    );
+                })}
+            </div>
+            <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-50">
+                <h3 className="font-bold uppercase text-sm text-gray-700">
+                    Thats My Bobords 2024 2nd Runner-up
+                </h3>
+                :
+                {contestants.map((contestant) => {
+                    let rank = getRanking(
+                        contestant.overallTotalAverage,
+                        scores
+                    );
+
+                    return (
+                        rank === 3 && (
+                            <h3 className="font-bold uppercase text-sm text-red-700">
+                                {contestant.contestant}
+                            </h3>
+                        )
+                    );
+                })}
             </div>
         </div>
     );
