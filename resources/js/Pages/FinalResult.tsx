@@ -149,6 +149,10 @@ const TabulationPerCriteria = () => {
                 :<h3 className="font-bold uppercase text-sm text-red-700"></h3>
             </div>
 
+            <div className="uppercase font-bold text-lg mt-4">
+                Thats my bobords Winners
+            </div>
+
             <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-200">
                 <h3 className="font-bold uppercase text-sm text-gray-700">
                     Thats My Bobords 2024 Winner
