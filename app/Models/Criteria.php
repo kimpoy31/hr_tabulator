@@ -13,5 +13,6 @@ class Criteria extends Model
         'percentage',
     ];
 
+
     use HasFactory;
 }

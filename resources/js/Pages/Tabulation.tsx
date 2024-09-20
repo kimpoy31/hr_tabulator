@@ -62,6 +62,8 @@ const Tabulation = () => {
         setJudge(props.judge)
         setActivity(props.activity)
         processContestants(props.contestants)
+
+        console.log(props)
     },[])
 
     // ***
@@ -177,7 +179,7 @@ const Tabulation = () => {
               </label>
             </div>
             
-            <table className="table table-sm">
+          <table className="table table-sm">
             <thead>
                 <tr className="border">
                 <th>Contestant</th>
@@ -211,14 +213,14 @@ const Tabulation = () => {
                 </tr>
                 )}
             </tbody>
-            </table>
+          </table>
         </div>
 
         {contestants.length === 0 || criterias.length === 0
         ?   <div className='w-full text-center p-8 bg-slate-100 mt-4 shadow-md uppercase font-bold'>
                 Please contact administrator
             </div>
-        :   <div className="overflow-x-auto mt-8">
+        :   <div className="overflow-x-auto my-8">
                 <h3 className="font-bold text-lg uppercase mb-2">{judge?.fullname}</h3>
               <table className="table table-sm border-collapse">
                 <thead>
@@ -254,6 +256,7 @@ const Tabulation = () => {
               </table>
             </div>
         }
+
 
         <div className="flex flex-col text-center items-center max-w-56 my-16">
             <hr className="w-full border-t-2 border-gray-900 " />
