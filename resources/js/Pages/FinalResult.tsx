@@ -133,29 +133,13 @@ const TabulationPerCriteria = () => {
                 );
             })}
 
-            <div className="flex items-center gap-4 p-2 mb-2 border-b-4">
-                <h3 className="font-bold uppercase text-sm text-gray-700">
-                    Thats My Bobords social media award
-                </h3>
-                :
-                <h3 className="font-bold uppercase text-sm text-red-700">
-                    Virgie bulandres (cluster 2)
-                </h3>
-            </div>
-            <div className="flex items-center gap-4 p-2 mb-2 border-b-4">
-                <h3 className="font-bold uppercase text-sm text-gray-700">
-                    Darling of the crowd
-                </h3>
-                :<h3 className="font-bold uppercase text-sm text-red-700"></h3>
-            </div>
-
-            <div className="uppercase font-bold text-lg mt-4">
-                Thats my bobords Winners
+            <div className="uppercase font-bold text-lg my-4">
+                Pop dance winners
             </div>
 
             <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-200">
                 <h3 className="font-bold uppercase text-sm text-gray-700">
-                    Thats My Bobords 2024 Winner
+                    Pop dance 2024 Champion
                 </h3>
                 :
                 {contestants.map((contestant) => {
@@ -175,7 +159,7 @@ const TabulationPerCriteria = () => {
             </div>
             <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-100">
                 <h3 className="font-bold uppercase text-sm text-gray-700">
-                    Thats My Bobords 2024 1st Runner-up
+                    Pop dance 1st Runner-up
                 </h3>
                 :
                 {contestants.map((contestant) => {
@@ -195,7 +179,7 @@ const TabulationPerCriteria = () => {
             </div>
             <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-50">
                 <h3 className="font-bold uppercase text-sm text-gray-700">
-                    Thats My Bobords 2024 2nd Runner-up
+                    Pop dance 2nd Runner-up
                 </h3>
                 :
                 {contestants.map((contestant) => {
@@ -206,6 +190,26 @@ const TabulationPerCriteria = () => {
 
                     return (
                         rank === 3 && (
+                            <h3 className="font-bold uppercase text-sm text-red-700">
+                                {contestant.contestant}
+                            </h3>
+                        )
+                    );
+                })}
+            </div>
+            <div className="flex items-center gap-4 p-2 mb-2 border-b-4 bg-blue-50">
+                <h3 className="font-bold uppercase text-sm text-gray-700">
+                    Pop dance 2nd Runner-up
+                </h3>
+                :
+                {contestants.map((contestant) => {
+                    let rank = getRanking(
+                        contestant.overallTotalAverage,
+                        scores
+                    );
+
+                    return (
+                        rank === 4 && (
                             <h3 className="font-bold uppercase text-sm text-red-700">
                                 {contestant.contestant}
                             </h3>
